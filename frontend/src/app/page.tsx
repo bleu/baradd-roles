@@ -10,7 +10,7 @@ export default function Home() {
           Barad — a keep for Stellar treasuries
         </div>
         <h1 className="max-w-2xl font-display text-5xl font-semibold leading-tight text-foreground">
-          Leave a position with one signature. Enter one with more.
+          Enter a position with multisig safety. Exit with one-click speed.
         </h1>
         <p className="max-w-xl text-lg text-muted">
           Barad is a wallet for Soroban smart accounts built on{" "}
@@ -55,17 +55,6 @@ export default function Home() {
           accent="text-rust"
           description="Only governance can change the rules themselves: add signers, install a new policy, or retire a protocol. Deny-by-default underneath all three."
         />
-      </section>
-
-      <section className="py-20">
-        <h2 className="font-display text-2xl text-foreground">Status</h2>
-        <p className="mt-3 max-w-2xl text-muted">
-          This is an early, open-source prototype. The policy contract (
-          <code className="text-foreground">roles-policy</code>) is implemented against
-          OpenZeppelin&apos;s <code className="text-foreground">stellar-accounts</code> 0.8.0 and
-          passes its unit tests; the accounts and rules shown here are illustrative data until a
-          preset is deployed and verified against a real protocol on testnet.
-        </p>
       </section>
     </div>
   );

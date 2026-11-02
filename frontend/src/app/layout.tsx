@@ -17,7 +17,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Barad — Stellar Roles treasury wallet",
   description:
-    "A treasury wallet for Soroban smart accounts: exit a position with one signature, enter one with more.",
+    "A treasury wallet for Soroban smart accounts: enter a position with multisig safety, exit with one-click speed.",
 };
 
 export default function RootLayout({
