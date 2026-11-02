@@ -1,0 +1,54 @@
+# A deliberately "widened" version of defindex-entry.toml, for demoing
+# `roles diff`: the deposit cap went up 10x and the threshold dropped to 1.
+
+[account]
+address = "CTREASURYACCOUNT"
+
+[[rule]]
+name = "entry-defindex"
+mode = "entry"
+threshold = 1
+signers = ["GOPERATOR1", "GAPPROVER1", "GAPPROVER2"]
+
+  [[rule.target]]
+  contract = "CDEFINDEXVAULT"
+  label = "DeFindex vault"
+
+    [[rule.target.fn]]
+    name = "deposit"
+
+      [[rule.target.fn.cond]]
+      op = "range"
+      arg = 1
+      min = "0"
+      max = "5000000000000"
+
+  [[rule.target]]
+  contract = "CUSDCTOKEN"
+  label = "USDC token"
+
+    [[rule.target.fn]]
+    name = "transfer"
+
+      [[rule.target.fn.cond]]
+      op = "eq_self"
+      arg = 0
+
+      [[rule.target.fn.cond]]
+      op = "eq"
+      arg = 1
+      type = "address"
+      value = "CDEFINDEXVAULT"
+
+    [[rule.target.fn]]
+    name = "approve"
+
+      [[rule.target.fn.cond]]
+      op = "eq_self"
+      arg = 0
+
+      [[rule.target.fn.cond]]
+      op = "eq"
+      arg = 1
+      type = "address"
+      value = "CDEFINDEXVAULT"

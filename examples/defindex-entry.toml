@@ -1,0 +1,53 @@
+# Illustrative only — see defindex-exit.toml.
+
+[account]
+address = "CTREASURYACCOUNT"
+
+[[rule]]
+name = "entry-defindex"
+mode = "entry"
+threshold = 2
+signers = ["GOPERATOR1", "GAPPROVER1", "GAPPROVER2"]
+
+  [[rule.target]]
+  contract = "CDEFINDEXVAULT"
+  label = "DeFindex vault"
+
+    [[rule.target.fn]]
+    name = "deposit"
+
+      [[rule.target.fn.cond]]
+      op = "range"
+      arg = 1
+      min = "0"
+      max = "500000000000"
+
+  [[rule.target]]
+  contract = "CUSDCTOKEN"
+  label = "USDC token"
+
+    [[rule.target.fn]]
+    name = "transfer"
+
+      [[rule.target.fn.cond]]
+      op = "eq_self"
+      arg = 0
+
+      [[rule.target.fn.cond]]
+      op = "eq"
+      arg = 1
+      type = "address"
+      value = "CDEFINDEXVAULT"
+
+    [[rule.target.fn]]
+    name = "approve"
+
+      [[rule.target.fn.cond]]
+      op = "eq_self"
+      arg = 0
+
+      [[rule.target.fn.cond]]
+      op = "eq"
+      arg = 1
+      type = "address"
+      value = "CDEFINDEXVAULT"

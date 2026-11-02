@@ -1,8 +1,10 @@
-# Stellar Roles
+# Barad
 
-> Audited permission policies for Soroban smart accounts, with asymmetric signature thresholds for entering and exiting a DeFi position.
+> A treasury wallet for Soroban smart accounts, built on **Stellar Roles**: audited permission policies with asymmetric signature thresholds for entering and exiting a DeFi position.
 
-**Status:** hypothesis to validate — pre-MVP, specification stage.
+*Barad* — fortress, in Sindarin.
+
+**Status:** early prototype. The policy contract is implemented and tested against a real dependency version; the CLI's offline commands work; the frontend is a working UI shell over illustrative data. See [Status](#status-and-whats-next) below for what's real versus still mocked.
 
 ## Problem
 
@@ -30,18 +32,21 @@ The smart account is the treasury. Each action is covered by a context rule with
 
 `roles-policy` denies anything not explicitly allowed. Operators can only reach the EXIT rule; entries and configuration changes require more signatures.
 
-## Repository layout (planned)
+## Repository layout
 
 ```
-contracts/roles-policy/   # Soroban policy contract (Rust)
+contracts/roles-policy/   # Soroban policy contract (Rust) — implemented, tested, builds to wasm
 crates/roles-config/      # shared config types (no_std)
-cli/                      # roles lint, simulate, diff, apply
-sdk/                      # TypeScript, wraps the Smart Account Kit
-tests/                    # fork tests, invariants, fuzz targets
-examples/                 # demo accounts and presets
-docs/                     # design, threat model, operations guide
-.github/workflows/        # CI: build, test, fuzz, smoke, lint
+sdk/                      # @barad/sdk — config schema, lint, diff (TypeScript, offline)
+cli/                      # @barad/cli — `roles lint|diff|simulate|apply`
+frontend/                 # Barad — the wallet UI (Next.js), see frontend/README.md
+examples/                 # example *.toml roles configs for the CLI
+docs/spec.md              # the full proposal and specification
+tests/                    # fork tests, invariants, fuzz targets (not yet added)
+.github/workflows/        # CI (not yet added)
 ```
+
+`sdk`, `cli`, and `frontend` are a single pnpm workspace — run `pnpm install` at the repo root.
 
 ## MVP scope
 
@@ -57,15 +62,22 @@ The MVP proves the core case — exit with 1 signature, entry with more — on a
 
 Out of scope for the MVP (phase 2): a web review UI, timelocked entries/policy changes, custom per-period caps, structured/nested argument decoding, pinning target Wasm hashes, and integrated monitoring/account hierarchies.
 
-## Status and open questions
+## Status and what's next
 
-This is still a hypothesis under validation. Three open questions gate the project:
+Done so far:
+
+- `contracts/roles-policy` implements OpenZeppelin's `Policy` trait against `stellar-accounts` 0.8.0, verified against that crate's real source (not just the spec's pseudocode). It passes 11 unit tests and builds to a deployable wasm (`stellar contract build`).
+- `@barad/sdk` and `@barad/cli` implement `roles lint` and `roles diff` for real, operating on local TOML config files — no network needed. `roles simulate` and `roles apply` are honest stubs: they explain exactly what infrastructure they need (a deployed contract, a funded testnet account, an RPC endpoint) rather than faking a result.
+- `frontend` is a working Next.js UI over illustrative data (`frontend/src/lib/mock-data.ts`) — treasury dashboard, ADMIN/EXIT/ENTRY rule cards, and a policy viewer that renders conditions in plain language. Freighter wallet connect works (read-only).
+
+Still open, and gating the project per docs/spec.md ("Pending validations"):
 
 1. Do candidate users (asset managers, DAO treasuries, RWA issuers) want non-custodial, on-chain policy on Stellar, and would they accept it over an off-chain MPC custodian?
 2. Does OpenZeppelin plan function- and argument-level conditions in its core (which would make part of this redundant)?
-3. Does the [Mandate](https://github.com/script3/mandate) project already cover enough of this?
+3. Does the [Mandate](https://github.com/SoroMandate/Mandate) project already cover enough of this?
+4. Picking and verifying a real protocol preset (DeFindex/Templar/Soroswap are candidates in the examples, unverified) and deploying `roles-policy` to testnet.
 
-See the full proposal and specification for the threat model, competitive landscape, milestones, and budget.
+See docs/spec.md for the full proposal: threat model, competitive landscape, milestones, and budget.
 
 ## License
 

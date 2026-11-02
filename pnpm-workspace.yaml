@@ -1,0 +1,11 @@
+packages:
+  - "sdk"
+  - "cli"
+  - "frontend"
+
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver
+
+onlyBuiltDependencies:
+  - esbuild
