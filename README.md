@@ -1,10 +1,10 @@
 # Barad
 
-> A treasury wallet for Soroban smart accounts, built on **Stellar Roles**: audited permission policies with asymmetric signature thresholds for entering and exiting a DeFi position.
+> A treasury wallet for Soroban smart accounts, built on **Barad Roles**: permission policies, implemented and tested but not yet audited, with asymmetric signature thresholds for entering and exiting a DeFi position.
 
-*Barad* — fortress, in Sindarin.
+*Barad* is Sindarin for "tower," also glossed "fort, fortress" ([Eldamo](https://elfdict.com/w/barad/s)).
 
-**Status:** early prototype. The policy contract is implemented and tested against a real dependency version; the CLI's offline commands work; the frontend is a working UI shell over illustrative data. See [Status](#status-and-whats-next) below for what's real versus still mocked.
+**Status: early prototype, running on demo data.** The policy contract is implemented and tested (14 tests) against a real dependency version, not yet audited or deployed; the CLI's `lint`/`diff` commands work offline; the frontend is a working UI shell over illustrative data, not a live treasury. See [Status](#status-and-whats-next) below for what's real versus still mocked, and `docs/marketing-audit.md` for how every claim in this file was checked.
 
 ## Problem
 
@@ -14,13 +14,13 @@ On Ethereum, [Zodiac Roles](https://github.com/gnosisguild/zodiac-modifier-roles
 
 ## Proposal
 
-**Stellar Roles** is a `RolesPolicy` compatible with OpenZeppelin's smart accounts, plus tooling to configure it safely:
+**Barad Roles** is a `RolesPolicy` compatible with OpenZeppelin's smart accounts, plus tooling to configure it safely:
 
 - **Asymmetric thresholds** — exit rules need 1 signature, entry rules need M, with deny-by-default so a loose rule can never authorize an entry.
 - **Function- and argument-level conditions** — equality, set membership, equality to the account's own address, and numeric ranges.
-- **Protocol presets** — reviewed, ready configurations for 1–2 Stellar protocols, so a manager doesn't have to reinterpret each contract's functions from scratch.
-- **Institutional-quality assurance** — external audit (via the Soroban Audit Bank, if eligible), fuzzing, invariant tests, and mainnet-fork tests.
-- **Review tooling** — a CLI and SDK to define, validate, simulate, diff, and install permissions, so approvers understand what they're signing.
+- **Protocol presets** — reviewed, ready configurations for 1–2 Stellar protocols, so a manager doesn't have to reinterpret each contract's functions from scratch. Not built yet — see Status.
+- **External audit planned** — via the Soroban Audit Bank, if eligible, plus fuzzing, invariant tests, and mainnet-fork tests. None of that exists yet; today there are 14 unit and property tests.
+- **Review tooling** — a CLI and SDK to define, validate, lint, and diff permissions, so approvers understand what they're signing. `simulate` and `apply` (to install a policy via a signed transaction) are not built yet.
 
 ### Architecture
 
@@ -41,7 +41,10 @@ sdk/                      # @barad/sdk — config schema, lint, diff (TypeScript
 cli/                      # @barad/cli — `roles lint|diff|simulate|apply`
 frontend/                 # Barad — the wallet UI (Next.js), see frontend/README.md
 examples/                 # example *.toml roles configs for the CLI
-docs/spec.md              # the full proposal and specification
+docs/spec.md              # the original SCF proposal and specification
+docs/landing-page-spec.md # the landing page design and messaging spec
+docs/marketing-audit.md   # claim-by-claim audit against that spec
+docs/validations.md       # dated findings for the spec's open questions
 tests/                    # fork tests, invariants, fuzz targets (not yet added)
 .github/workflows/        # CI (not yet added)
 ```
@@ -68,7 +71,7 @@ Done so far:
 
 - `contracts/roles-policy` implements OpenZeppelin's `Policy` trait against `stellar-accounts` 0.8.0, verified against that crate's real source (not just the spec's pseudocode). It passes 14 tests (11 unit + 3 property-based) and builds to a deployable wasm (`stellar contract build`).
 - `@barad/sdk` and `@barad/cli` implement `roles lint` and `roles diff` for real, operating on local TOML config files — no network needed. `roles simulate` and `roles apply` are honest stubs: they explain exactly what infrastructure they need (a deployed contract, a funded testnet account, an RPC endpoint) rather than faking a result.
-- `frontend` is a working Next.js UI over illustrative data (`frontend/src/lib/mock-data.ts`) — treasury dashboard, ADMIN/EXIT/ENTRY rule cards, and a policy viewer that renders conditions in plain language. Freighter wallet connect works (read-only).
+- `frontend` has two parts, per `Barad landing page design and messaging specification.md`: a landing page at `/` (hero, an interactive demo of the entry/exit asymmetry, a comparison of approaches, security/status, FAQ — every factual claim traced to `frontend/src/content/claims.ts` and checked in CI by `scripts/check-claims.ts`) and a prototype wallet UI at `/app` over illustrative data (`frontend/src/lib/mock-data.ts`) — treasury dashboard, ADMIN/EXIT/ENTRY rule cards, a policy viewer that renders conditions in plain language, always showing a "Demo data" banner. Freighter wallet connect works (read-only).
 
 Still open, and gating the project per docs/spec.md ("Pending validations") — see `docs/validations.md` for dated findings as these get checked:
 
@@ -84,3 +87,7 @@ See docs/spec.md for the full proposal: threat model, competitive landscape, mil
 ## License
 
 Licensed under the [MIT License](LICENSE).
+
+---
+
+Barad is experimental open-source software, currently an early prototype that runs on demo data. It is not financial advice and has not been audited. Barad is an independent project built on Stellar and on OpenZeppelin's `stellar-accounts`; it is not endorsed by the Stellar Development Foundation or OpenZeppelin. Barad is a Sindarin word; this project is not affiliated with the Tolkien Estate.

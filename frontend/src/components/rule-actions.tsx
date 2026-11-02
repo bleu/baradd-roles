@@ -24,8 +24,8 @@ export function RuleActions() {
             onClick={() => setOpen(open === key ? null : key)}
             className={`rounded-sm border px-3 py-1.5 text-xs tracking-wide transition ${
               open === key
-                ? "border-gold text-gold"
-                : "border-border text-muted hover:border-border-strong hover:text-foreground"
+                ? "border-ink text-ink"
+                : "border-line text-stone hover:border-stone hover:text-ink"
             }`}
           >
             roles {key}
@@ -33,7 +33,7 @@ export function RuleActions() {
         ))}
       </div>
       {open && (
-        <p className="mt-3 max-w-xl rounded-sm border border-border bg-surface p-3 text-xs text-muted">
+        <p className="mt-3 max-w-xl rounded-sm border border-line bg-surface p-3 text-xs text-stone">
           {COPY[open]}
         </p>
       )}

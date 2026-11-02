@@ -11,16 +11,16 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
-      <Link href="/accounts" className="text-xs text-muted transition hover:text-foreground">
+      <Link href="/app" className="text-xs text-stone transition hover:text-ink">
         ← Treasuries
       </Link>
 
       <div className="mt-4 flex items-start justify-between">
         <div>
-          <h1 className="font-display text-3xl text-foreground">{account.label}</h1>
-          <p className="mt-1 font-mono text-xs text-muted-dim">{shortAddr(account.id, 8, 8)}</p>
+          <h1 className="font-display text-3xl text-ink">{account.label}</h1>
+          <p className="mt-1 font-mono text-xs text-stone">{shortAddr(account.id, 8, 8)}</p>
         </div>
-        <span className="rounded-sm border border-border px-2 py-0.5 text-xs text-muted">
+        <span className="rounded-sm border border-line px-2 py-0.5 text-xs text-stone">
           {account.network}
         </span>
       </div>

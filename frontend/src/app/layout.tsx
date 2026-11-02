@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
   weight: ["500", "600", "700"],
 });
@@ -14,10 +13,16 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-mono-ibm",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
 export const metadata: Metadata = {
-  title: "Barad — Stellar Roles treasury wallet",
+  title: "Barad: a treasury wallet that retreats fast, advances slowly",
   description:
-    "A treasury wallet for Soroban smart accounts: enter a position with multisig safety, exit with one-click speed.",
+    "A treasury wallet for Soroban smart accounts: one signature to exit a DeFi position, more to enter. Early prototype, open source.",
 };
 
 export default function RootLayout({
@@ -27,11 +32,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${cormorant.variable} ${inter.variable} antialiased`}>
-        <div className="flex min-h-screen flex-col">
-          <SiteHeader />
-          <main className="flex-1">{children}</main>
-        </div>
+      <body className={`${fraunces.variable} ${inter.variable} ${plexMono.variable} antialiased`}>
+        {children}
       </body>
     </html>
   );

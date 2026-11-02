@@ -1,11 +1,8 @@
 import type { RuleKind } from "@/lib/types";
 
-const STYLES: Record<RuleKind, string> = {
-  Admin: "border-rust-dim text-rust bg-rust-dim/10",
-  Exit: "border-sage-dim text-sage bg-sage-dim/10",
-  Entry: "border-gold-dim text-gold bg-gold-dim/10",
-};
-
+// Deliberately uncolored: the spec reserves Approved/Denied green/red for
+// the demo's result states, and Lamp is the one brand accent, not a
+// three-way category system. The label text carries the distinction.
 const LABELS: Record<RuleKind, string> = {
   Admin: "Admin",
   Exit: "Exit · 1 signature",
@@ -14,9 +11,7 @@ const LABELS: Record<RuleKind, string> = {
 
 export function RuleKindBadge({ kind }: { kind: RuleKind }) {
   return (
-    <span
-      className={`inline-flex items-center rounded-sm border px-2 py-0.5 text-xs tracking-wide ${STYLES[kind]}`}
-    >
+    <span className="inline-flex items-center rounded-sm border border-line px-2 py-0.5 text-xs tracking-wide text-ink">
       {LABELS[kind]}
     </span>
   );

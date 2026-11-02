@@ -2,6 +2,8 @@
 
 Oct 30, 2026 · @Luiz Gustavo
 
+> **This is the original proposal (2026-10-30), describing a planned 24-week build.** Its "audited" language describes a funded future milestone (see Tranche #3 in "Milestones, schedule and budget"), not completed work. For current status, see `README.md` and `docs/validations.md`.
+
 ## Executive summary
 
 We propose **Stellar Roles**: a set of audited policies for Soroban smart accounts (OpenZeppelin's framework) that scope permissions by contract, function and argument, and apply different signature thresholds for leaving a DeFi position and for entering one.

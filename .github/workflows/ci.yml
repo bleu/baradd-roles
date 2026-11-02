@@ -32,5 +32,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm -r lint
+      - name: check-claims (landing page copy)
+        run: pnpm --filter frontend check-claims
       - run: pnpm -r test
       - run: pnpm -r build
