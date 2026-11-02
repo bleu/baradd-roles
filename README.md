@@ -66,16 +66,18 @@ Out of scope for the MVP (phase 2): a web review UI, timelocked entries/policy c
 
 Done so far:
 
-- `contracts/roles-policy` implements OpenZeppelin's `Policy` trait against `stellar-accounts` 0.8.0, verified against that crate's real source (not just the spec's pseudocode). It passes 11 unit tests and builds to a deployable wasm (`stellar contract build`).
+- `contracts/roles-policy` implements OpenZeppelin's `Policy` trait against `stellar-accounts` 0.8.0, verified against that crate's real source (not just the spec's pseudocode). It passes 14 tests (11 unit + 3 property-based) and builds to a deployable wasm (`stellar contract build`).
 - `@barad/sdk` and `@barad/cli` implement `roles lint` and `roles diff` for real, operating on local TOML config files — no network needed. `roles simulate` and `roles apply` are honest stubs: they explain exactly what infrastructure they need (a deployed contract, a funded testnet account, an RPC endpoint) rather than faking a result.
 - `frontend` is a working Next.js UI over illustrative data (`frontend/src/lib/mock-data.ts`) — treasury dashboard, ADMIN/EXIT/ENTRY rule cards, and a policy viewer that renders conditions in plain language. Freighter wallet connect works (read-only).
 
-Still open, and gating the project per docs/spec.md ("Pending validations"):
+Still open, and gating the project per docs/spec.md ("Pending validations") — see `docs/validations.md` for dated findings as these get checked:
 
-1. Do candidate users (asset managers, DAO treasuries, RWA issuers) want non-custodial, on-chain policy on Stellar, and would they accept it over an off-chain MPC custodian?
-2. Does OpenZeppelin plan function- and argument-level conditions in its core (which would make part of this redundant)?
+1. Do candidate users (asset managers, DAO treasuries, RWA issuers) want non-custodial, on-chain policy on Stellar, and would they accept it over an off-chain MPC custodian? Open — the plan is to find out via the SCF Open Track application itself.
+2. ~~Does OpenZeppelin plan function- and argument-level conditions in its core?~~ **Checked 2026-11-02: no, not on their public roadmap through v1.0.0.** Third parties are filling the gap with per-transaction code generation instead of a reusable primitive. See `docs/validations.md`.
 3. Does the [Mandate](https://github.com/SoroMandate/Mandate) project already cover enough of this?
 4. Picking and verifying a real protocol preset (DeFindex/Templar/Soroswap are candidates in the examples, unverified) and deploying `roles-policy` to testnet.
+
+**Submission deadline: 2026-11-09** (confirmed by the team) — 7 days out as of this writing. docs/spec.md's Week 1/Week 2 plan assumed a longer runway; it needs re-scoping against this date, not the December estimate it was written against.
 
 See docs/spec.md for the full proposal: threat model, competitive landscape, milestones, and budget.
 
