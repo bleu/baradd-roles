@@ -122,3 +122,5 @@ impl RolesPolicyContract {
 
 #[cfg(test)]
 mod test;
+#[cfg(test)]
+mod property_test;

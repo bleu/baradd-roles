@@ -17,6 +17,7 @@ roles-config = { path = "../../crates/roles-config" }
 
 [dev-dependencies]
 soroban-sdk = { workspace = true, features = ["testutils"] }
+proptest = "1.5"
 
 [features]
 testutils = ["soroban-sdk/testutils"]
