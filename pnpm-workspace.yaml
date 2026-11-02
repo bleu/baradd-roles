@@ -9,3 +9,9 @@ ignoredBuiltDependencies:
 
 onlyBuiltDependencies:
   - esbuild
+
+# tinypool <2.1.2 (pulled in transitively by vitest) has a known prototype-
+# pollution-to-RCE advisory (GHSA-g3hv-75wg-m249, GHSA-5gmw-xhrv-c9v3). Force
+# a patched version until vitest bumps its own pin.
+overrides:
+  tinypool: ">=2.1.2"
