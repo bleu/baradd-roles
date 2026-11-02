@@ -1,0 +1,28 @@
+# Rust
+/target
+**/target
+*.wasm
+
+# Soroban test artifacts
+**/test_snapshots/
+
+# Node
+node_modules/
+.pnpm-store/
+dist/
+build/
+.turbo/
+
+# Next.js
+.next/
+out/
+
+# Env
+.env
+.env.local
+.env*.local
+
+# Editor/OS
+.DS_Store
+.vscode/
+*.swp

@@ -1,0 +1,14 @@
+[package]
+name = "roles-config"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Shared RolesPolicy configuration types for Stellar Roles"
+
+[lib]
+crate-type = ["rlib"]
+doctest = false
+
+[dependencies]
+soroban-sdk = { workspace = true }
