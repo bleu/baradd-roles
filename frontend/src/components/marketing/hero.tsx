@@ -1,13 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
 import { StatusBadge } from "@/components/ui/status-badge";
 
 export function Hero() {
   return (
-    <section className="mx-auto grid max-w-[1120px] gap-10 px-6 py-16 sm:py-24 lg:grid-cols-2 lg:items-center">
-      <div className="flex flex-col items-start gap-6">
+    <section className="mx-auto max-w-[1120px] px-6 py-16 sm:py-24">
+      <div className="flex max-w-xl flex-col items-start gap-6">
         <StatusBadge />
-        <h1 className="max-w-xl font-display text-[2.25rem] font-semibold leading-tight text-pale sm:text-5xl lg:text-[3.5rem]">
+        <h1 className="font-display text-[2.25rem] font-semibold leading-tight text-pale sm:text-5xl lg:text-[3.5rem]">
           Leave with one key. Enter with many.
         </h1>
         <p className="max-w-lg text-lg text-mist">
@@ -38,22 +37,6 @@ export function Hero() {
           github.com/bleu/barad-stellar-wallet
         </a>
       </div>
-      <figure className="gold-glow">
-        <div className="card-shadow relative aspect-[11/10] overflow-hidden rounded-2xl border border-line">
-          <Image
-            src="/brand/backgrounds/barad-citadel-hero.jpg"
-            alt="A fortress keep at night, lit by a single beam rising from its gate, in dark mountains."
-            fill
-            priority
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover"
-          />
-        </div>
-        <figcaption className="mt-3 flex justify-between text-sm font-medium text-pale">
-          <span>Exit: 1 signature</span>
-          <span>Enter: 3 signatures</span>
-        </figcaption>
-      </figure>
     </section>
   );
 }
