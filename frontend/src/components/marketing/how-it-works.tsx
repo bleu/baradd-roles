@@ -12,7 +12,7 @@ export function HowItWorks() {
       <h2 className="font-display text-3xl text-pale">How it works</h2>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-sm border border-line">
+        <div className="overflow-hidden rounded-2xl border border-line">
           <div className="grid grid-cols-3 divide-x divide-line border-b border-line bg-surface text-center text-xs text-mist">
             <div className="p-3">Operators</div>
             <div className="p-3">Approvers</div>

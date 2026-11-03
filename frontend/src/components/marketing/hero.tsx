@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { TreasuryDiagram } from "./treasury-diagram";
 
 export function Hero() {
   return (
@@ -18,13 +18,13 @@ export function Hero() {
         <div className="flex flex-wrap gap-3">
           <a
             href="#demo"
-            className="rounded-sm bg-gold px-5 py-2.5 text-sm font-medium text-gold-ink transition hover:opacity-90"
+            className="rounded-full bg-gold px-5 py-2.5 text-sm font-medium text-gold-ink transition hover:opacity-90"
           >
             Try to move the treasury
           </a>
           <Link
             href="/docs"
-            className="rounded-sm border border-line px-5 py-2.5 text-sm text-pale transition hover:border-mist"
+            className="rounded-full border border-line px-5 py-2.5 text-sm text-pale transition hover:border-mist"
           >
             Read the spec
           </Link>
@@ -38,9 +38,22 @@ export function Hero() {
           github.com/bleu/barad-stellar-wallet
         </a>
       </div>
-      <div className="flex justify-center lg:justify-end">
-        <TreasuryDiagram />
-      </div>
+      <figure className="gold-glow">
+        <div className="card-shadow relative aspect-[11/10] overflow-hidden rounded-2xl border border-line">
+          <Image
+            src="/brand/backgrounds/barad-citadel-hero.jpg"
+            alt="A fortress keep at night, lit by a single beam rising from its gate, in dark mountains."
+            fill
+            priority
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
+          />
+        </div>
+        <figcaption className="mt-3 flex justify-between text-sm font-medium text-pale">
+          <span>Exit: 1 signature</span>
+          <span>Enter: 3 signatures</span>
+        </figcaption>
+      </figure>
     </section>
   );
 }

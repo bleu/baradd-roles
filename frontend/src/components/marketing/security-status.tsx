@@ -6,7 +6,7 @@ export function SecurityStatus() {
     <section id="security-and-status" className="mx-auto max-w-[1120px] px-6 py-16">
       <h2 className="font-display text-3xl text-pale">Security and status</h2>
 
-      <div className="mt-8 overflow-x-auto rounded-sm border border-line">
+      <div className="mt-8 overflow-x-auto rounded-2xl border border-line">
         <table className="w-full min-w-[640px] border-collapse text-left text-sm">
           <thead>
             <tr className="bg-surface text-mist">

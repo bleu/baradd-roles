@@ -1,17 +1,19 @@
 /**
- * A three-spire silhouette on a solid base — restyled from the user's art
- * reference (2026-11-03). Pure brand mark, no doorway detail; that lives in
- * the hero graphic instead. Single color (currentColor) plus one gold
- * accent at the tallest spire's tip, like a lit beacon.
+ * The official Barad fortress mark — negative-space twin towers converging
+ * to a central spire, with an arched gate cut from the base. From the
+ * user-supplied brand asset pack (public/brand/svg/barad-mark.svg),
+ * reproduced here as a path so it inherits currentColor like the rest of
+ * the UI rather than being a static asset.
  */
 export function Logo({ className = "h-6 w-6" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={className} aria-hidden="true">
+    <svg viewBox="0 0 100 100" className={className} aria-hidden="true">
       <path
-        d="M6,28 L6,20 L8,20 L11,10 L13,16 L16,4 L19,16 L21,10 L24,20 L26,20 L26,28 Z"
+        d="M12 88 L18 38 L31 32 L31 19 L41 25 L47 8 L53 25 L63 19 L63 32 L76 38 L82 88 L66 88 L62 49 L55 45 L55 35 L51 40 L51 53 L49 53 L49 40 L45 35 L45 45 L38 49 L34 88 Z M42 88 L42 70 Q42 58 50 58 Q58 58 58 70 L58 88 Z"
         fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
       />
-      <circle cx="16" cy="4" r="1.3" fill="var(--gold)" />
     </svg>
   );
 }

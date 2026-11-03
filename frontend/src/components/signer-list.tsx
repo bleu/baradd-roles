@@ -3,7 +3,7 @@ import { shortAddr } from "@/lib/format";
 
 export function SignerList({ signers, threshold }: { signers: Signer[]; threshold: number }) {
   return (
-    <ul className="divide-y divide-line rounded-sm border border-line">
+    <ul className="divide-y divide-line rounded-2xl border border-line">
       {signers.map((s, i) => (
         <li key={s.address} className="flex items-center justify-between px-4 py-2.5 text-sm">
           <div className="flex items-center gap-2">

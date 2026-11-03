@@ -13,7 +13,7 @@ export function Problem() {
         ))}
       </ol>
 
-      <div className="mt-10 overflow-hidden rounded-sm border border-line">
+      <div className="mt-10 overflow-hidden rounded-2xl border border-line">
         <table className="w-full border-collapse text-left text-sm">
           <thead>
             <tr className="bg-surface text-mist">

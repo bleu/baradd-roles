@@ -1,0 +1,12 @@
+/* BARAD starter design tokens */
+:root {
+  --barad-obsidian: #0B0D10;
+  --barad-stone: #1F2329;
+  --barad-mist: #6B7280;
+  --barad-gold: #D4AF7C;
+  --barad-ivory: #E6E1D6;
+  --barad-sky: #3B82F6;
+  --barad-radius-card: 16px;
+  --barad-border: rgba(230, 225, 214, 0.12);
+  --barad-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+}

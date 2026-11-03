@@ -10,7 +10,7 @@ export function Closing() {
           href="https://github.com/bleu/barad-stellar-wallet"
           target="_blank"
           rel="noreferrer"
-          className="rounded-sm bg-gold px-5 py-2.5 text-sm font-medium text-gold-ink transition hover:opacity-90"
+          className="rounded-full bg-gold px-5 py-2.5 text-sm font-medium text-gold-ink transition hover:opacity-90"
         >
           GitHub
         </a>
@@ -18,7 +18,7 @@ export function Closing() {
           href="https://github.com/bleu/barad-stellar-wallet/blob/master/docs/spec.md"
           target="_blank"
           rel="noreferrer"
-          className="rounded-sm border border-line px-5 py-2.5 text-sm text-pale transition hover:border-mist"
+          className="rounded-full border border-line px-5 py-2.5 text-sm text-pale transition hover:border-mist"
         >
           Specification
         </a>

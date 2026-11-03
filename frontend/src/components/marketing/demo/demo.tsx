@@ -85,14 +85,14 @@ export function Demo() {
         <button
           type="button"
           onClick={() => applyShortcut("3am-exit")}
-          className="rounded-sm border border-line px-3 py-1.5 text-sm text-pale transition hover:border-mist"
+          className="rounded-2xl border border-line px-3 py-1.5 text-sm text-pale transition hover:border-mist"
         >
           A 3 a.m. exit
         </button>
         <button
           type="button"
           onClick={() => applyShortcut("stolen-key")}
-          className="rounded-sm border border-line px-3 py-1.5 text-sm text-pale transition hover:border-mist"
+          className="rounded-2xl border border-line px-3 py-1.5 text-sm text-pale transition hover:border-mist"
         >
           A stolen operator key
         </button>
@@ -119,7 +119,7 @@ export function Demo() {
                   type="button"
                   aria-pressed={active}
                   onClick={() => toggleKey(key)}
-                  className={`rounded-sm border px-3 py-1.5 text-sm transition ${
+                  className={`rounded-2xl border px-3 py-1.5 text-sm transition ${
                     active
                       ? "border-pale bg-pale text-obsidian"
                       : "border-line text-pale hover:border-mist"
@@ -141,7 +141,7 @@ export function Demo() {
                 type="button"
                 aria-pressed={action === a.id}
                 onClick={() => setAction(a.id)}
-                className={`rounded-sm border px-3 py-2 text-left text-sm transition ${
+                className={`rounded-2xl border px-3 py-2 text-left text-sm transition ${
                   action === a.id ? "border-pale bg-surface text-pale" : "border-line text-pale hover:border-mist"
                 }`}
               >
@@ -153,7 +153,7 @@ export function Demo() {
 
         <div aria-live="polite">
           <h3 className="text-xs tracking-[0.15em] text-mist uppercase">Result</h3>
-          <div className="mt-3 rounded-sm border border-line p-5">
+          <div className="mt-3 rounded-2xl border border-line p-5">
             <div className="flex items-center gap-2">
               <span
                 aria-hidden

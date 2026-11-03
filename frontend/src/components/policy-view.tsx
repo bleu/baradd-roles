@@ -6,7 +6,7 @@ export function PolicyView({ config }: { config: RolesConfig }) {
   return (
     <div className="space-y-4">
       {config.targets.map((target) => (
-        <div key={target.contract} className="rounded-sm border border-line">
+        <div key={target.contract} className="rounded-2xl border border-line">
           <div className="flex items-center justify-between border-b border-line bg-surface px-4 py-2.5">
             <span className="text-sm text-pale">{target.label ?? "Contract"}</span>
             <span className="font-mono text-xs text-mist">{shortAddr(target.contract, 6, 6)}</span>

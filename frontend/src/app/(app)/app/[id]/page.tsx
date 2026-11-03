@@ -20,7 +20,7 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
           <h1 className="font-display text-3xl text-pale">{account.label}</h1>
           <p className="mt-1 font-mono text-xs text-mist">{shortAddr(account.id, 8, 8)}</p>
         </div>
-        <span className="rounded-sm border border-line px-2 py-0.5 text-xs text-mist">
+        <span className="rounded-2xl border border-line px-2 py-0.5 text-xs text-mist">
           {account.network}
         </span>
       </div>

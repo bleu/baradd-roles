@@ -7,6 +7,10 @@ Two route groups, per `Barad landing page design and messaging specification.md`
 
 `/docs` redirects to `docs/spec.md` in the repository.
 
+## Visual design
+
+Dark palette (obsidian/stone/mist/gold/sky), Cinzel display type, the fortress mark, and the citadel hero photo all come from the user-supplied asset pack in `public/brand/` (`public/brand/design-tokens.css` is upstream of `src/app/globals.css`'s token values — keep them in sync). This departs deliberately from `docs/landing-page-spec.md` section 9's light-theme/no-illustration guidance; see that file's note and the session history for why.
+
 ## Status
 
 Illustrative only — `src/lib/mock-data.ts` holds placeholder accounts and policies. Nothing here reads from testnet or mainnet yet; wiring it up needs a deployed `roles-policy` contract and a preset for a real protocol (see `docs/spec.md`, "MVP scope"). Connecting Freighter works today (read-only: it reads the active address and network, it doesn't sign anything). Every factual claim on the landing page traces to `src/content/claims.ts`; `scripts/check-claims.ts` fails the build on a forbidden word or an unqualified "audited."

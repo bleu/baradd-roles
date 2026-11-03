@@ -10,7 +10,7 @@ export function RuleCard({ accountId, rule }: { accountId: string; rule: Context
   return (
     <Link
       href={`/app/${accountId}/rules/${rule.id}`}
-      className="group block rounded-sm border border-line bg-surface p-5 transition hover:border-mist"
+      className="card-shadow group block rounded-2xl border border-line bg-surface p-5 transition hover:border-mist"
     >
       <div className="flex items-start justify-between gap-3">
         <div>

@@ -19,7 +19,7 @@ export function SignatureMeter({
         {segments.map((filled, i) => (
           <span
             key={i}
-            className={`h-2 flex-1 rounded-sm ${filled ? color : "bg-line"}`}
+            className={`h-2 flex-1 rounded-2xl ${filled ? color : "bg-line"}`}
             aria-hidden
           />
         ))}

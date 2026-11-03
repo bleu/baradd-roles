@@ -49,7 +49,7 @@ export default async function RulePage({
           </div>
         </section>
       ) : (
-        <section className="mt-10 rounded-sm border border-line bg-surface p-4 text-sm text-mist">
+        <section className="mt-10 rounded-2xl border border-line bg-surface p-4 text-sm text-mist">
           This is the Admin rule — it has no RolesPolicy attached. Its signers can change rules and
           install or remove policies on the other rules.
         </section>

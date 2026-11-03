@@ -33,7 +33,7 @@ export function MarketingNav() {
         </nav>
         <Link
           href="/app"
-          className="rounded-sm bg-gold px-4 py-2 text-sm font-medium text-gold-ink transition hover:opacity-90"
+          className="rounded-full bg-gold px-4 py-2 text-sm font-medium text-gold-ink transition hover:opacity-90"
         >
           Open the prototype
         </Link>

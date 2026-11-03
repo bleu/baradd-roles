@@ -19,14 +19,14 @@ export default function AccountsPage() {
             <Link
               key={account.id}
               href={`/app/${account.id}`}
-              className="rounded-sm border border-line bg-surface p-6 transition hover:border-mist"
+              className="card-shadow rounded-2xl border border-line bg-surface p-6 transition hover:border-mist"
             >
               <div className="flex items-start justify-between">
                 <div>
                   <h2 className="font-display text-xl text-pale">{account.label}</h2>
                   <p className="mt-1 font-mono text-xs text-mist">{shortAddr(account.id, 6, 6)}</p>
                 </div>
-                <span className="rounded-sm border border-line px-2 py-0.5 text-xs text-mist">
+                <span className="rounded-2xl border border-line px-2 py-0.5 text-xs text-mist">
                   {account.network}
                 </span>
               </div>

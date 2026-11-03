@@ -10,10 +10,10 @@ export function PolicyExample() {
       </p>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <pre className="overflow-x-auto rounded-sm border border-line bg-obsidian p-4 font-mono text-xs leading-relaxed text-pale">
+        <pre className="overflow-x-auto rounded-2xl border border-line bg-obsidian p-4 font-mono text-xs leading-relaxed text-pale">
           <code>{exampleToml}</code>
         </pre>
-        <div className="rounded-sm border border-line p-5">
+        <div className="rounded-2xl border border-line p-5">
           <p className="text-xs tracking-[0.15em] text-mist uppercase">In plain language</p>
           <ul className="mt-3 space-y-3 text-sm text-pale">
             {examplePlainLanguage.map((line, i) => (

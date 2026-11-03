@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
-/* Dark "premium wallet" palette, restyled from the art reference the user
- * supplied (2026-11-03) — obsidian/stone/mist/gold/sky, Cinzel display type.
- * This deliberately departs from "Barad landing page design and messaging
- * specification.md" section 9's light-theme/no-illustration guidance; the
- * user reviewed that guidance and asked for this direction explicitly. The
- * content, claims, and honesty rules from that spec are unchanged — only
- * the visual system is. */
+/* Dark "premium wallet" palette, from the user-supplied brand asset pack
+ * (public/brand/, 2026-11-03) — design-tokens.css is the source of truth
+ * for these exact values. This deliberately departs from "Barad landing
+ * page design and messaging specification.md" section 9's light-theme/
+ * no-illustration guidance; the user reviewed that guidance and asked for
+ * this direction explicitly. The content, claims, and honesty rules from
+ * that spec are unchanged — only the visual system is. */
 :root {
   --obsidian: #0b0d10;
-  --surface: #1a1d22;
-  --surface-raised: #22262c;
-  --mist: #7b8392;
-  --line: #2a2f37;
+  --surface: #1f2329;
+  --surface-raised: #272c33;
+  --mist: #6b7280;
+  --line: rgba(230, 225, 214, 0.12);
 
-  --pale: #ece7de;
+  --pale: #e6e1d6;
 
   --gold: #d4af7c;
   --gold-bright: #e8c493;
   --gold-ink: #1a1410;
 
-  --sky: #5b9bf5;
+  --sky: #3b82f6;
 
   --approved: #3fb881;
   --denied: #e06a5c;
@@ -28,6 +28,9 @@
   --background: var(--obsidian);
   --foreground: var(--pale);
   --border: var(--line);
+
+  --radius-card: 1rem;
+  --shadow-card: 0 24px 80px rgba(0, 0, 0, 0.38);
 
   --font-display: var(--font-cinzel);
   --font-sans: var(--font-inter);
@@ -66,6 +69,12 @@ body {
 ::selection {
   background: var(--gold);
   color: var(--gold-ink);
+}
+
+/* Soft elevation for card-like surfaces — design-tokens.css's
+   --barad-shadow, applied through one class so the value stays in sync. */
+.card-shadow {
+  box-shadow: var(--shadow-card);
 }
 
 /* A soft radial glow, used sparingly behind the hero mark and major CTAs —
