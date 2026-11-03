@@ -23,16 +23,16 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
                 aria-expanded={open}
                 aria-controls={panelId}
                 onClick={() => setOpenIndex(open ? null : i)}
-                className="flex w-full items-center justify-between gap-4 py-4 text-left font-display text-lg text-ink"
+                className="flex w-full items-center justify-between gap-4 py-4 text-left font-display text-lg text-pale"
               >
                 {item.question}
-                <span aria-hidden className="shrink-0 text-stone">
+                <span aria-hidden className="shrink-0 text-mist">
                   {open ? "−" : "+"}
                 </span>
               </button>
             </h3>
             {open && (
-              <div id={panelId} className="pb-4 text-sm text-stone">
+              <div id={panelId} className="pb-4 text-sm text-mist">
                 {item.answer}
               </div>
             )}

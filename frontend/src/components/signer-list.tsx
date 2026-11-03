@@ -8,12 +8,12 @@ export function SignerList({ signers, threshold }: { signers: Signer[]; threshol
         <li key={s.address} className="flex items-center justify-between px-4 py-2.5 text-sm">
           <div className="flex items-center gap-2">
             <span
-              className={`h-1.5 w-1.5 rounded-full ${i < threshold ? "bg-lamp" : "bg-line"}`}
+              className={`h-1.5 w-1.5 rounded-full ${i < threshold ? "bg-gold" : "bg-line"}`}
               aria-hidden
             />
-            <span className="text-ink">{s.label ?? shortAddr(s.address)}</span>
+            <span className="text-pale">{s.label ?? shortAddr(s.address)}</span>
           </div>
-          <span className="font-mono text-xs text-stone">{shortAddr(s.address, 6, 6)}</span>
+          <span className="font-mono text-xs text-mist">{shortAddr(s.address, 6, 6)}</span>
         </li>
       ))}
     </ul>

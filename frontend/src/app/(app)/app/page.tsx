@@ -5,8 +5,8 @@ import { shortAddr } from "@/lib/format";
 export default function AccountsPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
-      <h1 className="font-display text-3xl text-ink">Treasuries</h1>
-      <p className="mt-2 max-w-xl text-stone">
+      <h1 className="font-display text-3xl text-pale">Treasuries</h1>
+      <p className="mt-2 max-w-xl text-mist">
         Smart accounts with a Barad Roles policy installed. Demo data — no live treasury is
         connected.
       </p>
@@ -19,18 +19,18 @@ export default function AccountsPage() {
             <Link
               key={account.id}
               href={`/app/${account.id}`}
-              className="rounded-sm border border-line bg-surface p-6 transition hover:border-stone"
+              className="rounded-sm border border-line bg-surface p-6 transition hover:border-mist"
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="font-display text-xl text-ink">{account.label}</h2>
-                  <p className="mt-1 font-mono text-xs text-stone">{shortAddr(account.id, 6, 6)}</p>
+                  <h2 className="font-display text-xl text-pale">{account.label}</h2>
+                  <p className="mt-1 font-mono text-xs text-mist">{shortAddr(account.id, 6, 6)}</p>
                 </div>
-                <span className="rounded-sm border border-line px-2 py-0.5 text-xs text-stone">
+                <span className="rounded-sm border border-line px-2 py-0.5 text-xs text-mist">
                   {account.network}
                 </span>
               </div>
-              <p className="mt-4 text-sm text-stone">
+              <p className="mt-4 text-sm text-mist">
                 {exitRules} exit rule{exitRules === 1 ? "" : "s"}, {entryRules} entry rule
                 {entryRules === 1 ? "" : "s"}
               </p>

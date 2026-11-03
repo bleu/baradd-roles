@@ -1,45 +1,55 @@
 @import "tailwindcss";
 
-/* Palette per "Barad landing page design and messaging specification.md",
-   section 9. Light by default — dark theme is explicitly out of scope
-   (P3) for this pass. */
+/* Dark "premium wallet" palette, restyled from the art reference the user
+ * supplied (2026-11-03) — obsidian/stone/mist/gold/sky, Cinzel display type.
+ * This deliberately departs from "Barad landing page design and messaging
+ * specification.md" section 9's light-theme/no-illustration guidance; the
+ * user reviewed that guidance and asked for this direction explicitly. The
+ * content, claims, and honesty rules from that spec are unchanged — only
+ * the visual system is. */
 :root {
-  --ink: #101418;
-  --paper: #f6f4ef;
-  --surface: #ffffff;
-  --stone: #8a8f98;
-  --line: #d9d6ce;
+  --obsidian: #0b0d10;
+  --surface: #1a1d22;
+  --surface-raised: #22262c;
+  --mist: #7b8392;
+  --line: #2a2f37;
 
-  --lamp: #c9822b;
-  --lamp-ink: #101418; /* text color used on top of a Lamp fill */
+  --pale: #ece7de;
 
-  --approved: #1f8a70;
-  --denied: #b3412f;
+  --gold: #d4af7c;
+  --gold-bright: #e8c493;
+  --gold-ink: #1a1410;
 
-  --background: var(--paper);
-  --foreground: var(--ink);
-  --muted: var(--stone);
+  --sky: #5b9bf5;
+
+  --approved: #3fb881;
+  --denied: #e06a5c;
+
+  --background: var(--obsidian);
+  --foreground: var(--pale);
   --border: var(--line);
 
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-cinzel);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-mono-ibm);
 }
 
 @theme inline {
-  --color-ink: var(--ink);
-  --color-paper: var(--paper);
+  --color-obsidian: var(--obsidian);
   --color-surface: var(--surface);
-  --color-stone: var(--stone);
+  --color-surface-raised: var(--surface-raised);
+  --color-mist: var(--mist);
   --color-line: var(--line);
-  --color-lamp: var(--lamp);
-  --color-lamp-ink: var(--lamp-ink);
+  --color-pale: var(--pale);
+  --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
+  --color-gold-ink: var(--gold-ink);
+  --color-sky: var(--sky);
   --color-approved: var(--approved);
   --color-denied: var(--denied);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
   --color-border: var(--border);
 
   --font-display: var(--font-display);
@@ -54,19 +64,32 @@ body {
 }
 
 ::selection {
-  background: var(--lamp);
-  color: var(--lamp-ink);
+  background: var(--gold);
+  color: var(--gold-ink);
 }
 
-/* Skip link: visually hidden until focused. Required by spec section 12
-   (accessibility: "skip link"). */
+/* A soft radial glow, used sparingly behind the hero mark and major CTAs —
+   the one atmospheric touch carried over from the reference. */
+.gold-glow {
+  position: relative;
+}
+.gold-glow::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--gold) 20%, transparent), transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Skip link: visually hidden until focused. */
 .skip-link {
   position: absolute;
   left: -9999px;
   top: 0;
   z-index: 100;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--pale);
+  color: var(--obsidian);
   padding: 0.75rem 1rem;
 }
 .skip-link:focus {

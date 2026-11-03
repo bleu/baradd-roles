@@ -3,8 +3,8 @@
 // security section and next to every unfinished feature.
 export function HonestLimit({ children }: { children: React.ReactNode }) {
   return (
-    <div className="border-l-2 border-lamp bg-surface py-2 pl-4 text-sm text-stone">
-      <span className="font-medium text-ink">Honest limit. </span>
+    <div className="border-l-2 border-gold bg-surface py-2 pl-4 text-sm text-mist">
+      <span className="font-medium text-pale">Honest limit. </span>
       {children}
     </div>
   );

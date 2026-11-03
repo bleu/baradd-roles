@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Cinzel, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
   subsets: ["latin"],
   weight: ["500", "600", "700"],
 });
@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${fraunces.variable} ${inter.variable} ${plexMono.variable} antialiased`}>
+      <body className={`${cinzel.variable} ${inter.variable} ${plexMono.variable} antialiased`}>
         {children}
       </body>
     </html>

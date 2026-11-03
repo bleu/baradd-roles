@@ -76,8 +76,8 @@ export function Demo() {
 
   return (
     <section id="demo" className="mx-auto max-w-[1120px] px-6 py-16">
-      <h2 className="font-display text-3xl text-ink">Try to move the treasury</h2>
-      <p className="mt-2 max-w-2xl text-stone">
+      <h2 className="font-display text-3xl text-pale">Try to move the treasury</h2>
+      <p className="mt-2 max-w-2xl text-mist">
         Simulated in your browser. Not a live treasury. A testnet version is coming.
       </p>
 
@@ -85,23 +85,23 @@ export function Demo() {
         <button
           type="button"
           onClick={() => applyShortcut("3am-exit")}
-          className="rounded-sm border border-line px-3 py-1.5 text-sm text-ink transition hover:border-stone"
+          className="rounded-sm border border-line px-3 py-1.5 text-sm text-pale transition hover:border-mist"
         >
           A 3 a.m. exit
         </button>
         <button
           type="button"
           onClick={() => applyShortcut("stolen-key")}
-          className="rounded-sm border border-line px-3 py-1.5 text-sm text-ink transition hover:border-stone"
+          className="rounded-sm border border-line px-3 py-1.5 text-sm text-pale transition hover:border-mist"
         >
           A stolen operator key
         </button>
-        <label className="ml-auto flex items-center gap-2 text-sm text-stone">
+        <label className="ml-auto flex items-center gap-2 text-sm text-mist">
           <input
             type="checkbox"
             checked={classic}
             onChange={(e) => setClassic(e.target.checked)}
-            className="h-4 w-4 accent-lamp"
+            className="h-4 w-4 accent-gold"
           />
           Classic multisig (2-of-3, any key, ignores destination)
         </label>
@@ -109,7 +109,7 @@ export function Demo() {
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1fr_1fr]">
         <div>
-          <h3 className="text-xs tracking-[0.15em] text-stone uppercase">Who signs</h3>
+          <h3 className="text-xs tracking-[0.15em] text-mist uppercase">Who signs</h3>
           <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Keys that have signed">
             {ALL_KEYS.map((key) => {
               const active = signed.includes(key);
@@ -121,8 +121,8 @@ export function Demo() {
                   onClick={() => toggleKey(key)}
                   className={`rounded-sm border px-3 py-1.5 text-sm transition ${
                     active
-                      ? "border-ink bg-ink text-paper"
-                      : "border-line text-ink hover:border-stone"
+                      ? "border-pale bg-pale text-obsidian"
+                      : "border-line text-pale hover:border-mist"
                   }`}
                 >
                   {KEY_INFO[key].label}
@@ -133,7 +133,7 @@ export function Demo() {
         </div>
 
         <div>
-          <h3 className="text-xs tracking-[0.15em] text-stone uppercase">What they try to do</h3>
+          <h3 className="text-xs tracking-[0.15em] text-mist uppercase">What they try to do</h3>
           <div className="mt-3 flex flex-col gap-2">
             {(Object.values(ACTIONS)).map((a) => (
               <button
@@ -142,7 +142,7 @@ export function Demo() {
                 aria-pressed={action === a.id}
                 onClick={() => setAction(a.id)}
                 className={`rounded-sm border px-3 py-2 text-left text-sm transition ${
-                  action === a.id ? "border-ink bg-surface text-ink" : "border-line text-ink hover:border-stone"
+                  action === a.id ? "border-pale bg-surface text-pale" : "border-line text-pale hover:border-mist"
                 }`}
               >
                 {a.label}
@@ -152,32 +152,32 @@ export function Demo() {
         </div>
 
         <div aria-live="polite">
-          <h3 className="text-xs tracking-[0.15em] text-stone uppercase">Result</h3>
+          <h3 className="text-xs tracking-[0.15em] text-mist uppercase">Result</h3>
           <div className="mt-3 rounded-sm border border-line p-5">
             <div className="flex items-center gap-2">
               <span
                 aria-hidden
-                className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-paper ${
+                className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-pale ${
                   result.approved ? "bg-approved" : "bg-denied"
                 }`}
               >
                 {result.approved ? "✓" : "✕"}
               </span>
-              <span className="font-display text-2xl text-ink">
+              <span className="font-display text-2xl text-pale">
                 {result.approved ? "Approved" : "Denied"}
               </span>
             </div>
-            <p className="mt-3 text-sm text-ink">{result.reason}</p>
+            <p className="mt-3 text-sm text-pale">{result.reason}</p>
             <div className="mt-4">
               <SignatureMeter counted={result.counted} required={result.required} approved={result.approved} />
             </div>
-            <p className="mt-2 text-xs text-stone">{result.ruleId} rule</p>
+            <p className="mt-2 text-xs text-mist">{result.ruleId} rule</p>
 
             <button
               type="button"
               onClick={() => setWhyOpen((v) => !v)}
               aria-expanded={whyOpen}
-              className="mt-4 text-sm text-stone underline decoration-line underline-offset-4 hover:text-ink"
+              className="mt-4 text-sm text-mist underline decoration-line underline-offset-4 hover:text-pale"
             >
               {whyOpen ? "Hide why" : "Why?"}
             </button>
@@ -188,8 +188,8 @@ export function Demo() {
                     <span className={step.passed ? "text-approved" : "text-denied"}>
                       {step.passed ? "✓" : "✕"}
                     </span>{" "}
-                    <span className="text-ink">{step.label}.</span>{" "}
-                    <span className="text-stone">{step.detail}</span>
+                    <span className="text-pale">{step.label}.</span>{" "}
+                    <span className="text-mist">{step.detail}</span>
                   </li>
                 ))}
               </ol>

@@ -18,17 +18,17 @@ export default async function RulePage({
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <Link href={`/app/${id}`} className="text-xs text-stone transition hover:text-ink">
+      <Link href={`/app/${id}`} className="text-xs text-mist transition hover:text-pale">
         ← {account.label}
       </Link>
 
       <div className="mt-4 flex items-start justify-between gap-4">
-        <h1 className="font-display text-3xl text-ink">{rule.name}</h1>
+        <h1 className="font-display text-3xl text-pale">{rule.name}</h1>
         <RuleKindBadge kind={rule.kind} />
       </div>
 
       <section className="mt-10">
-        <h2 className="text-xs tracking-[0.2em] text-stone uppercase">
+        <h2 className="text-xs tracking-[0.2em] text-mist uppercase">
           Signers · {rule.threshold} of {rule.signers.length} required
         </h2>
         <div className="mt-3">
@@ -38,10 +38,10 @@ export default async function RulePage({
 
       {rule.config ? (
         <section className="mt-10">
-          <h2 className="text-xs tracking-[0.2em] text-stone uppercase">
+          <h2 className="text-xs tracking-[0.2em] text-mist uppercase">
             RolesPolicy · {rule.config.mode === "Exit" ? "exit" : "entry"} mode
           </h2>
-          <p className="mt-2 text-sm text-stone">
+          <p className="mt-2 text-sm text-mist">
             Deny-by-default: any contract, function, or argument not listed below is rejected.
           </p>
           <div className="mt-3">
@@ -49,14 +49,14 @@ export default async function RulePage({
           </div>
         </section>
       ) : (
-        <section className="mt-10 rounded-sm border border-line bg-surface p-4 text-sm text-stone">
+        <section className="mt-10 rounded-sm border border-line bg-surface p-4 text-sm text-mist">
           This is the Admin rule — it has no RolesPolicy attached. Its signers can change rules and
           install or remove policies on the other rules.
         </section>
       )}
 
       <section className="mt-10">
-        <h2 className="text-xs tracking-[0.2em] text-stone uppercase">Tooling</h2>
+        <h2 className="text-xs tracking-[0.2em] text-mist uppercase">Tooling</h2>
         <div className="mt-3">
           <RuleActions />
         </div>

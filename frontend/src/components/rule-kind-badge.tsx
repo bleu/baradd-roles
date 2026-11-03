@@ -11,7 +11,7 @@ const LABELS: Record<RuleKind, string> = {
 
 export function RuleKindBadge({ kind }: { kind: RuleKind }) {
   return (
-    <span className="inline-flex items-center rounded-sm border border-line px-2 py-0.5 text-xs tracking-wide text-ink">
+    <span className="inline-flex items-center rounded-sm border border-line px-2 py-0.5 text-xs tracking-wide text-pale">
       {LABELS[kind]}
     </span>
   );

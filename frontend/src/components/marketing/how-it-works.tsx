@@ -9,39 +9,39 @@ const EVAL_STEPS = [
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="mx-auto max-w-[1120px] px-6 py-16">
-      <h2 className="font-display text-3xl text-ink">How it works</h2>
+      <h2 className="font-display text-3xl text-pale">How it works</h2>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-2">
         <div className="overflow-hidden rounded-sm border border-line">
-          <div className="grid grid-cols-3 divide-x divide-line border-b border-line bg-surface text-center text-xs text-stone">
+          <div className="grid grid-cols-3 divide-x divide-line border-b border-line bg-surface text-center text-xs text-mist">
             <div className="p-3">Operators</div>
             <div className="p-3">Approvers</div>
             <div className="p-3">Governance</div>
           </div>
           <div className="grid grid-cols-3 divide-x divide-line border-b border-line text-center text-sm">
-            <div className="p-3 text-ink">EXIT rule<br /><span className="text-xs text-stone">1 signature</span></div>
-            <div className="p-3 text-ink">ENTRY rule<br /><span className="text-xs text-stone">M signatures</span></div>
-            <div className="p-3 text-ink">ADMIN rule<br /><span className="text-xs text-stone">N of M</span></div>
+            <div className="p-3 text-pale">EXIT rule<br /><span className="text-xs text-mist">1 signature</span></div>
+            <div className="p-3 text-pale">ENTRY rule<br /><span className="text-xs text-mist">M signatures</span></div>
+            <div className="p-3 text-pale">ADMIN rule<br /><span className="text-xs text-mist">N of M</span></div>
           </div>
-          <div className="bg-ink p-4 text-center text-sm text-paper">
+          <div className="bg-gold p-4 text-center text-sm text-gold-ink">
             Policy contract — checks every call against the rule
           </div>
-          <div className="p-4 text-center text-xs text-stone">
+          <div className="p-4 text-center text-xs text-mist">
             CLI prepares and verifies configurations before anyone signs
           </div>
         </div>
 
         <div>
-          <h3 className="text-xs tracking-[0.15em] text-stone uppercase">Evaluation, in order</h3>
+          <h3 className="text-xs tracking-[0.15em] text-mist uppercase">Evaluation, in order</h3>
           <ol className="mt-4 space-y-3">
             {EVAL_STEPS.map((step, i) => (
-              <li key={i} className="flex gap-3 text-sm text-ink">
-                <span className="font-mono text-stone">{i + 1}</span>
+              <li key={i} className="flex gap-3 text-sm text-pale">
+                <span className="font-mono text-mist">{i + 1}</span>
                 {step}
               </li>
             ))}
           </ol>
-          <p className="mt-4 text-sm text-stone">
+          <p className="mt-4 text-sm text-mist">
             A failure at any step denies the whole call. There is no other path to approval.
           </p>
         </div>

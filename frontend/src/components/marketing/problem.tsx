@@ -3,12 +3,12 @@ import { timeline, thresholdComparison } from "@/content/problem";
 export function Problem() {
   return (
     <section className="mx-auto max-w-[1120px] px-6 py-16">
-      <p className="text-xs tracking-[0.15em] text-stone uppercase">Illustrative scenario</p>
+      <p className="text-xs tracking-[0.15em] text-mist uppercase">Illustrative scenario</p>
       <ol className="mt-6 grid gap-6 sm:grid-cols-3">
         {timeline.map((step) => (
-          <li key={step.time} className="border-t-2 border-ink pt-4">
-            <span className="font-mono text-sm text-lamp">{step.time}</span>
-            <p className="mt-2 text-ink">{step.text}</p>
+          <li key={step.time} className="border-t-2 border-pale pt-4">
+            <span className="font-mono text-sm text-gold">{step.time}</span>
+            <p className="mt-2 text-pale">{step.text}</p>
           </li>
         ))}
       </ol>
@@ -16,7 +16,7 @@ export function Problem() {
       <div className="mt-10 overflow-hidden rounded-sm border border-line">
         <table className="w-full border-collapse text-left text-sm">
           <thead>
-            <tr className="bg-surface text-stone">
+            <tr className="bg-surface text-mist">
               <th className="px-4 py-3 font-normal">Setup</th>
               <th className="px-4 py-3 font-normal">Signatures to exit</th>
               <th className="px-4 py-3 font-normal">Signatures to enter</th>
@@ -25,21 +25,21 @@ export function Problem() {
           <tbody>
             {thresholdComparison.map((row) => (
               <tr key={row.setup} className="border-t border-line">
-                <td className="px-4 py-3 text-ink">{row.setup}</td>
-                <td className="px-4 py-3 text-ink">{row.exit}</td>
-                <td className="px-4 py-3 text-ink">{row.enter}</td>
+                <td className="px-4 py-3 text-pale">{row.setup}</td>
+                <td className="px-4 py-3 text-pale">{row.exit}</td>
+                <td className="px-4 py-3 text-pale">{row.enter}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <p className="mt-2 text-xs text-stone">
+      <p className="mt-2 text-xs text-mist">
         Source:{" "}
         <a
           href="https://developers.stellar.org/docs/glossary/multisig/"
           target="_blank"
           rel="noreferrer"
-          className="underline decoration-line underline-offset-2 hover:text-ink"
+          className="underline decoration-line underline-offset-2 hover:text-pale"
         >
           Stellar docs, multisig
         </a>

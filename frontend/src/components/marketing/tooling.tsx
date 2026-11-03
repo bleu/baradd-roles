@@ -4,8 +4,8 @@ import { lintOutput, diffOutput, comingTools } from "@/content/tooling";
 export function Tooling() {
   return (
     <section className="mx-auto max-w-[1120px] px-6 py-16">
-      <h2 className="font-display text-3xl text-ink">Tooling</h2>
-      <p className="mt-2 max-w-2xl text-stone">
+      <h2 className="font-display text-3xl text-pale">Tooling</h2>
+      <p className="mt-2 max-w-2xl text-mist">
         Real terminal output, run against the example files in this repository.
       </p>
 
@@ -15,11 +15,11 @@ export function Tooling() {
       </div>
 
       <div className="mt-8">
-        <p className="text-xs tracking-[0.15em] text-stone uppercase">Coming</p>
+        <p className="text-xs tracking-[0.15em] text-mist uppercase">Coming</p>
         <ul className="mt-3 space-y-2">
           {comingTools.map((t) => (
-            <li key={t.name} className="text-sm text-stone">
-              <code className="text-ink">{t.name}</code> — needs {t.need}.
+            <li key={t.name} className="text-sm text-mist">
+              <code className="text-pale">{t.name}</code> — needs {t.need}.
             </li>
           ))}
         </ul>

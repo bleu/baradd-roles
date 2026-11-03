@@ -24,7 +24,7 @@ export function SignatureMeter({
           />
         ))}
       </div>
-      <p className="mt-1.5 text-xs text-stone">
+      <p className="mt-1.5 text-xs text-mist">
         {counted} of {required} required
       </p>
     </div>

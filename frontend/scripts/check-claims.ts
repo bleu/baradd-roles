@@ -92,6 +92,11 @@ function checkFile(absPath: string, root: string): Violation[] {
   const violations: Violation[] = [];
 
   lines.forEach((line, i) => {
+    // Skip comment lines — dev notes aren't rendered page copy, and words
+    // like "robust" are fine there even though they're on the avoid list
+    // for user-facing text.
+    if (/^\s*(\/\/|\*|\/\*)/.test(line)) return;
+
     const lower = line.toLowerCase();
 
     // "audited" must have "not" or "planned" nearby — within a 2-line
