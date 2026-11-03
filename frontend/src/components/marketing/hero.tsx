@@ -3,7 +3,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
 
 export function Hero() {
   return (
-    <section className="mx-auto max-w-[1120px] px-6 py-16 sm:py-24">
+    <section className="px-6 py-16 sm:py-24 lg:px-12">
       <div className="flex max-w-xl flex-col items-start gap-6">
         <StatusBadge />
         <h1 className="font-display text-[2.25rem] font-semibold leading-tight text-pale sm:text-5xl lg:text-[3.5rem]">
