@@ -55,6 +55,8 @@ export function Demo() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const isDefault = signed.length === 0 && action === "exit-to-treasury" && !classic;
+    if (isDefault) return;
     const params = new URLSearchParams();
     if (signed.length > 0) params.set("signed", signed.join(","));
     params.set("action", action);
