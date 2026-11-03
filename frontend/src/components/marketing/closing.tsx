@@ -2,9 +2,7 @@ export function Closing() {
   return (
     <section className="mx-auto max-w-[1120px] px-6 py-16 text-center">
       <h2 className="font-display text-3xl text-pale">Follow the build</h2>
-      <p className="mx-auto mt-3 max-w-md text-mist">
-        The code is open. That&apos;s the proof, until there&apos;s more to show.
-      </p>
+      <p className="mx-auto mt-3 max-w-md text-mist">The code is open.</p>
       <div className="mt-6 flex justify-center gap-3">
         <a
           href="https://github.com/bleu/barad-stellar-wallet"
