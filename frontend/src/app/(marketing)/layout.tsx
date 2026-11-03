@@ -19,9 +19,9 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[80%_35%]"
+          className="object-cover object-[62%_30%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-obsidian from-45% via-obsidian/85 via-65% to-obsidian/15" />
+        <div className="absolute inset-0 bg-gradient-to-r from-obsidian from-30% via-obsidian/70 via-55% to-obsidian/10" />
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-obsidian" />
       </div>
 
