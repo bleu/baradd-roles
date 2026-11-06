@@ -1,7 +1,5 @@
 // Builds and (optionally) submits the real "create a context rule and
-// install RolesPolicy on it" transaction via smart-account-kit. See
-// docs/validations.md / the plan this was built from for how the pieces
-// here were verified against the kit's actual API, not guessed:
+// install RolesPolicy on it" transaction via smart-account-kit.
 // - kit.rules.add() creates the context rule AND installs every policy in
 //   `policies` in the same call — there's no separate install step.
 // - The context type is always Default: an Exit/Entry rule's targets can

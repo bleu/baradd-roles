@@ -1,10 +1,5 @@
-/**
- * Every factual claim the landing page is allowed to make, transcribed from
- * "Barad landing page design and messaging specification.md", section 4.
- * Page copy references a claim by id (see `copy/*.ts`); `scripts/check-claims.ts`
- * and the claims themselves are the only places that should ever need editing
- * when a fact changes.
- */
+// Claim IDs keep page copy tied to its evidence and limits.
+// Update these records when facts change; check-claims.ts checks page copy.
 export interface Claim {
   id: string;
   claim: string;
@@ -107,13 +102,6 @@ export const claims: Record<string, Claim> = {
     status: "None confirmed.",
     safePhrasing: "Omit.",
     neverSay: ["any number, logo, or quote"],
-  },
-  "grants-sdf": {
-    id: "grants-sdf",
-    claim: "Grants and the Stellar Development Foundation",
-    status: "Nothing awarded at the time of writing.",
-    safePhrasing: "If awarded: “recipient of an SCF award” plus the required disclaimer.",
-    neverSay: ["backed by SDF", "official Stellar partner"],
   },
   "open-source": {
     id: "open-source",

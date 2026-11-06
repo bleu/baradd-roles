@@ -1,7 +1,4 @@
-//! Property tests for the evaluator, per docs/spec.md's planned-tests list
-//! ("Unit and property tests"). Fork tests and fuzzing need external infra
-//! (a network fork, a nightly toolchain with cargo-fuzz) not set up yet —
-//! these run under plain `cargo test`.
+//! Property tests for the evaluator. Run with `cargo test` without a network fork.
 extern crate std;
 
 use std::panic::{catch_unwind, AssertUnwindSafe};

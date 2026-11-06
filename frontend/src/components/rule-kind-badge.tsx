@@ -1,8 +1,6 @@
 import type { RuleKind } from "@/lib/types";
 
-// Deliberately uncolored: the spec reserves Approved/Denied green/red for
-// the demo's result states, and Lamp is the one brand accent, not a
-// category-color system. The label text carries the distinction.
+// Reserve green and red for approval results; distinguish rule kinds by text.
 const LABELS: Record<RuleKind, string> = {
   Admin: "Admin",
   Rule: "Rule",

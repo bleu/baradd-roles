@@ -1,7 +1,4 @@
-// Spec section 6, microcopy for status: "Demo data. No live chest is
-// connected." Section 13 acceptance checklist requires it on every screen
-// of the wallet UI. "Deposit Wall" styling: a quiet black strip with an
-// orange dot — the one banner tier, never alarming.
+// Keep the demo-data notice visible on wallet screens that use mock data.
 export function DemoBanner() {
   return (
     <div

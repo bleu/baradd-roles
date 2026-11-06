@@ -1,4 +1,3 @@
-// Section 7.3.
 export const problemHeadline = "3:07 a.m. One operator. One key.";
 
 export const problemCopy = [

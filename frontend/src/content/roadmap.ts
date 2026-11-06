@@ -1,5 +1,4 @@
-// Section 7.11. No dates — "planned" only, per section 10 rule 4 and the
-// section 14 default ("Are roadmap dates allowed? Planned, no dates").
+// Planned work has no committed release dates.
 export const roadmap = {
   done: [
     "Policy contract (roles-policy), implemented and tested",

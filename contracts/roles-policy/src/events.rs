@@ -1,10 +1,7 @@
 use roles_config::Mode;
 use soroban_sdk::{contractevent, Address, Symbol};
 
-/// Emitted on install. Carries the mode and target count, not the full
-/// configuration, so configuration changes stay auditable off-chain without
-/// risking the transaction-size limit the spec flags (see docs/spec.md,
-/// "Storage, limits and costs").
+/// Emitted on install. Omits the full configuration to keep the event small.
 #[contractevent]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct RolesInstalled {

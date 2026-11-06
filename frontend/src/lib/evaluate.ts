@@ -1,6 +1,6 @@
 /**
- * Pure evaluation logic for the "Try to move the chest" demo (spec
- * section 8). No network, no wallet — mirrors the real account's semantics:
+ * Pure evaluation logic for the "Try to move the chest" demo. No network,
+ * no wallet — mirrors the real account's semantics:
  * route to a rule, check the argument conditions, then check whether ANY
  * ONE of the rule's independent role groups has reached its own threshold
  * (groups are never pooled together). Over a fixed, hardcoded example.
@@ -104,7 +104,7 @@ export const ACTIONS: Record<ActionId, ActionDef> = {
   },
 };
 
-/** The classic-multisig toggle (section 8.1): one pooled threshold, any
+/** The classic-multisig toggle: one pooled threshold, any
  * key, and it never inspects the call's destination or arguments. */
 export const CLASSIC_THRESHOLD = 5;
 

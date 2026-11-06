@@ -1,4 +1,4 @@
-// Section 7.10. No adoption claims, no logos — these are situations, not customers.
+// These are example uses, not customer or adoption claims.
 export interface AudienceCard {
   title: string;
   situation: string;

@@ -58,7 +58,7 @@ test.describe("Demo — independent role groups, driven through the real UI", ()
   });
 });
 
-test.describe("Demo — classic multisig contrast (section 8.1)", () => {
+test.describe("Demo — classic multisig contrast", () => {
   test("needs 5 of 8 keys regardless of role or action", async ({ page }) => {
     await page.goto("/#demo");
     await page.getByRole("button", { name: /Classic multisig/ }).click();

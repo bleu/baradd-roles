@@ -36,7 +36,7 @@ describe("evaluate — independent role groups", () => {
   });
 });
 
-describe("evaluate — classic multisig toggle (section 8.1 contrast)", () => {
+describe("evaluate — classic multisig toggle", () => {
   it("needs 5 of 8 keys regardless of role or action", () => {
     const under = evaluate(["O1", "O2", "A1", "A2"], "exit", true);
     const atThreshold = evaluate(["O1", "O2", "A1", "A2", "A3"], "exit", true);

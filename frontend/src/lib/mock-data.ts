@@ -2,8 +2,7 @@ import type { SmartAccount } from "./types";
 
 // Placeholder data for the UI shell. Addresses are illustrative, not real
 // deployed contracts — nothing here is read from testnet or mainnet yet.
-// Replace with `get_config` reads once a policy and preset are deployed
-// (see docs/spec.md, "MVP scope").
+// Replace with `get_config` reads once a policy and preset are deployed.
 
 const OPERATOR_1 = "GAOPERATOR1XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 const OPERATOR_2 = "GAOPERATOR2XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";

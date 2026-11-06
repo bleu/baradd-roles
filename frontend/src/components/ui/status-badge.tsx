@@ -1,5 +1,3 @@
-// Spec section 6: "Early prototype · testnet demo in progress". Neutral
-// styling, always visible above the fold.
 export function StatusBadge() {
   return (
     <span

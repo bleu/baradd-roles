@@ -3,9 +3,7 @@
 /* "Deposit Wall" (Direction C) — a brutalist deposit-box system: concrete
  * ground, thick ink borders, hard offset shadows (no blur), zero radius,
  * one signal-orange accent, and a literal keyhole icon as the device for
- * showing a rule's signature threshold. Replaces the earlier dark-citadel
- * palette (design-tokens.css, public/brand/) wholesale — see
- * docs/redesign-brief.md and the approved mockups for the full brief.
+ * showing a rule's signature threshold.
  *
  * Existing utility class NAMES (text-pale, bg-surface, border-line, etc.)
  * are kept and REVALUED here rather than renamed at every call site: most

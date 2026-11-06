@@ -1,93 +1,92 @@
-# Baradd
+# Baradd Roles
 
-> A treasury wallet for Soroban smart accounts, built on **Baradd Roles**: permission policies, implemented and tested but not yet audited, with asymmetric signature thresholds for entering and exiting a DeFi position.
+Baradd Roles is a permission policy for Soroban smart accounts, with a TypeScript SDK, CLI, and treasury wallet interface. It lets one account use different signer groups and thresholds for different actions.
 
-The name is inspired by Sindarin *barad*, "tower," also glossed "fort, fortress" ([Eldamo](https://elfdict.com/w/barad/s)).
+The account checks signatures; `RolesPolicy` restricts the contracts, functions, and arguments each rule allows. Different rules can require different signer groups and thresholds, including for calls to the same contract. ENTRY and EXIT are examples of this model: a treasury can allow one operator to exit a DeFi position while requiring more signatures to enter it.
 
-**Status: early prototype, running on demo data.** The policy contract is implemented and tested (14 tests) against a real dependency version, not yet audited or deployed; the CLI's `lint`/`diff` commands work offline; the frontend is a working UI shell over illustrative data, not a live treasury. See [Status](#status-and-whats-next) below for what's real versus still mocked, and `docs/marketing-audit.md` for how every claim in this file was checked.
+This is experimental software. It has not been externally audited and is not ready for production funds.
 
-## Problem
+## Permission model
 
-Whoever operates a treasury must be able to reduce risk quickly with one key, but must not be able to add risk without more approvals. Stellar's classic multisig can't express that: every operation falls into one weighted threshold, so the model can't tell entering a position apart from leaving it.
+The smart account holds the funds. Each context rule has its own signers and policies. A threshold policy allows M-of-N authorization; without one, all listed signers are required. Signer groups are independent; an address can belong to more than one group.
 
-On Ethereum, [Zodiac Roles](https://github.com/gnosisguild/zodiac-modifier-roles) solves this on top of Safe by scoping permissions per contract, function, and argument. Stellar has no equivalent yet. Soroban smart accounts already expose everything needed to build one: the `__check_auth` function receives the full list of authorized calls, each with its contract, function name, and arguments — making function- and argument-level policies possible. [OpenZeppelin's Stellar smart-accounts framework](https://github.com/OpenZeppelin/stellar-contracts) provides threshold and weighted-threshold policies, but (per its RC v0.7.0 audit) scopes rules only by contract address, discarding function and arguments.
+An example configuration uses three groups:
 
-## Proposal
+| Group | Permission | Example threshold |
+| --- | --- | --- |
+| ADMIN | Change account rules and policies | 2 governance signatures |
+| EXIT | Call listed exit functions, with funds returned to the treasury | 1 operator signature |
+| ENTRY | Call listed entry functions and required token operations | 3 approver signatures |
 
-**Baradd Roles** is a `RolesPolicy` compatible with OpenZeppelin's smart accounts, plus tooling to configure it safely:
+These names and thresholds describe a configuration, not fixed roles built into the policy. The installed rules determine who can act.
 
-- **Asymmetric thresholds** — exit rules need 1 signature, entry rules need M, with deny-by-default so a loose rule can never authorize an entry.
-- **Function- and argument-level conditions** — equality, set membership, equality to the account's own address, and numeric ranges.
-- **Protocol presets** — reviewed, ready configurations for 1–2 Stellar protocols, so a manager doesn't have to reinterpret each contract's functions from scratch. Not built yet — see Status.
-- **External audit planned** — via the Soroban Audit Bank, if eligible, plus fuzzing, invariant tests, and mainnet-fork tests. None of that exists yet; today there are 14 unit and property tests.
-- **Review tooling** — a CLI and SDK to define, validate, lint, and diff permissions, so approvers understand what they're signing. `simulate` and `apply` (to install a policy via a signed transaction) are not built yet.
+`RolesPolicy` denies calls that do not match the configured contract and function. It checks every argument condition on a matching function:
 
-### Architecture
+- `Eq`: the argument equals a configured value.
+- `OneOf`: the argument is in an allowed set.
+- `EqSelf`: the argument equals the smart account address.
+- `Range`: an integer argument is within the configured bounds.
 
-The smart account is the treasury. Each action is covered by a context rule with its own signers and policy:
+An exit rule must be configured for the target protocol's actual calls. The policy does not infer whether a function reduces financial risk.
 
-- **ADMIN** (default): N-of-M governance signers — the only rule that can change rules and policies.
-- **EXIT**, per target protocol: 1 operator signature, scoped to exit-only functions.
-- **ENTRY**, per target protocol: M approver signatures, scoped to listed entry functions (plus the token `transfer`/`approve` calls entry requires).
+## Current state
 
-`roles-policy` denies anything not explicitly allowed. Operators can only reach the EXIT rule; entries and configuration changes require more signatures.
+The repository contains the following capabilities:
+
+| Component | State |
+| --- | --- |
+| Soroban policy | Implements OpenZeppelin's `Policy` trait, with unit and property tests |
+| SDK and CLI | Local TOML parsing, lint, diff, and policy installation through the Smart Account Kit |
+| Candidate-call simulation (`roles simulate`) | Not implemented |
+| Treasury interface | Testnet account reads, account creation, and rule creation with wallet signing; also includes local drafts and example data |
+| Interactive website demo | Runs in the browser without a wallet or network |
+| DeFi actions | Protocol action buttons do not execute transactions; protocol presets are not verified integrations |
+| Mainnet and audit | Mainnet is disabled in the frontend; no external audit has been completed |
+
+The SDK/CLI installer currently installs the permission policy without a threshold policy. Its submitted rules require all listed signers, even when the TOML file specifies a lower threshold. The frontend's rule-creation path supports lower thresholds.
+
+See the [technical specification](docs/spec.md) for contract behavior, configuration limits, and security boundaries. The [CLI](cli/README.md), [SDK](sdk/README.md), and [frontend](frontend/README.md) each have their own usage notes.
 
 ## Repository layout
 
-```
-contracts/roles-policy/   # Soroban policy contract (Rust) — implemented, tested, builds to wasm
-crates/roles-config/      # shared config types (no_std)
-sdk/                      # @baradd/sdk — config schema, lint, diff (TypeScript, offline)
-cli/                      # @baradd/cli — `roles lint|diff|simulate|apply`
-frontend/                 # Baradd — the wallet UI (Next.js), see frontend/README.md
-examples/                 # example *.toml roles configs for the CLI
-docs/spec.md              # the original SCF proposal and specification
-docs/landing-page-spec.md # the landing page design and messaging spec
-docs/marketing-audit.md   # claim-by-claim audit against that spec
-docs/validations.md       # dated findings for the spec's open questions
-tests/                    # fork tests, invariants, fuzz targets (not yet added)
-.github/workflows/        # CI (not yet added)
+```text
+contracts/roles-policy/   Soroban permission policy
+crates/roles-config/      Shared Rust configuration types
+sdk/                     TypeScript configuration and transaction tools
+cli/                     roles lint, diff, simulate, and apply
+frontend/                Next.js website and treasury interface
+examples/                Example TOML configurations
+docs/spec.md             Technical specification and threat model
+.github/workflows/       Continuous integration
 ```
 
-`sdk`, `cli`, and `frontend` are a single pnpm workspace — run `pnpm install` at the repo root.
+## Development
 
-## MVP scope
+The SDK, CLI, and frontend use a pnpm workspace. Run these commands from the repository root:
 
-The MVP proves the core case — exit with 1 signature, entry with more — on a real protocol, with an auditable policy and minimal tooling to configure it:
+```sh
+pnpm install
+pnpm build
+pnpm test
+pnpm lint
+```
 
-- `RolesPolicy` with Exit and Entry modes, deny-by-default, Eq/OneOf/EqSelf/Range conditions.
-- Compact events for enforcement and configuration changes.
-- A CLI (`lint`, `simulate`, `diff`, `apply`) and a TypeScript SDK integrated with the Smart Account Kit.
-- 1–2 presets for Stellar protocols with distinct entry and exit functions.
-- Unit, property, invariant, and fork tests, with CI.
-- A testnet demonstration with a real protocol, and mainnet deployment of the policy contract after audit.
-- Documentation, examples, and an operations guide for managers and DAOs.
+The contracts use a Cargo workspace:
 
-Out of scope for the MVP (phase 2): a web review UI, timelocked entries/policy changes, custom per-period caps, structured/nested argument decoding, pinning target Wasm hashes, and integrated monitoring/account hierarchies.
+```sh
+cargo test --workspace
+```
 
-## Status and what's next
+See [examples](examples/) for configuration files. Example addresses and protocol functions are illustrative unless stated otherwise.
 
-Done so far:
+## Security limits
 
-- `contracts/roles-policy` implements OpenZeppelin's `Policy` trait against `stellar-accounts` 0.8.0, verified against that crate's real source (not just the spec's pseudocode). It passes 14 tests (11 unit + 3 property-based) and is deployed to Stellar testnet: `CCVR6FJSG3IX4NNKPFPZ6R3DWJROUFEDN2JJAN2XNXDIS3YXNPL6QVWF`.
-- `@baradd/sdk` and `@baradd/cli` implement `roles lint` and `roles diff` for real, operating on local TOML config files — no network needed. `roles apply` is implemented for real: it builds the actual create-context-rule-and-install-policy transaction via Stellar's [Smart Account Kit](https://github.com/stellar/smart-account-kit), and the config-to-XDR encoding is verified by an offline round-trip test against `roles-policy`'s real contract spec. Its dry-run mode has been checked against the deployed testnet instance above; the full sign-and-submit path still needs a deployed smart account with an admin rule to submit against. `roles simulate` is still an honest stub: it explains exactly what infrastructure it needs (an RPC endpoint, a funded testnet account) rather than faking a result.
-- `frontend` has two parts, per `Barad landing page design and messaging specification.md`: a landing page at `/` (hero, an interactive demo of the entry/exit asymmetry, a comparison of approaches, security/status, FAQ — every factual claim traced to `frontend/src/content/claims.ts` and checked in CI by `scripts/check-claims.ts`) and a prototype wallet UI at `/app` over illustrative data (`frontend/src/lib/mock-data.ts`) — treasury dashboard, ADMIN/EXIT/ENTRY rule cards, a policy viewer that renders conditions in plain language, always showing a "Demo data" banner. Freighter wallet connect works (read-only).
+A policy only restricts the rules on which it is installed. Another permissive rule can authorize the same call. Review the whole account configuration, including its default rule.
 
-Still open, and gating the project per docs/spec.md ("Pending validations") — see `docs/validations.md` for dated findings as these get checked:
-
-1. Do candidate users (asset managers, DAO treasuries, RWA issuers) want non-custodial, on-chain policy on Stellar, and would they accept it over an off-chain MPC custodian? Open — the plan is to find out via the SCF Open Track application itself.
-2. ~~Does OpenZeppelin plan function- and argument-level conditions in its core?~~ **Checked 2026-11-02: no, not on their public roadmap through v1.0.0.** Third parties are filling the gap with per-transaction code generation instead of a reusable primitive. See `docs/validations.md`.
-3. Does the [Mandate](https://github.com/SoroMandate/Mandate) project already cover enough of this?
-4. Picking and verifying a real protocol preset (DeFindex/Templar/Soroswap are candidates in the examples, unverified). `roles-policy` itself is now deployed to testnet (see above).
-
-**Submission deadline: 2026-11-09** (confirmed by the team) — 7 days out as of this writing. docs/spec.md's Week 1/Week 2 plan assumed a longer runway; it needs re-scoping against this date, not the December estimate it was written against.
-
-See docs/spec.md for the full proposal: threat model, competitive landscape, milestones, and budget.
+A compromised exit signer can still force permitted exits. Contract and function restrictions do not protect against price changes, a target protocol upgrade, or an incorrect configuration. Do not treat a permitted call as proof that it is financially safe.
 
 ## License
 
-Licensed under the [MIT License](LICENSE).
+[MIT](LICENSE).
 
----
-
-Baradd is experimental open-source software, currently an early prototype that runs on demo data. It is not financial advice and has not been audited. Baradd is an independent project built on Stellar and on OpenZeppelin's `stellar-accounts`; it is not endorsed by the Stellar Development Foundation or OpenZeppelin. Its name is inspired by the Sindarin word barad; this project is not affiliated with the Tolkien Estate.
+Baradd is an independent project built on Stellar and OpenZeppelin's `stellar-accounts`. It is not endorsed by the Stellar Development Foundation or OpenZeppelin. It is not financial advice.

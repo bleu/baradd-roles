@@ -1,9 +1,8 @@
 // Verbatim from examples/exit-vault.toml in the repository root — not
 // hand-written for the page. Keep in sync if that file changes.
-export const exampleToml = `# Illustrative only — CEXAMPLEVAULT/GOPERATOR* are placeholders, not real
-# deployed addresses. See docs/spec.md, "Week 1", item 3: the exact function
-# names and arguments still need verifying against a real protocol's testnet
-# transaction before this is used for anything but a CLI demo.
+export const exampleToml = `# CLI demo only. CEXAMPLEVAULT/GOPERATOR* are placeholder addresses.
+# Before live use, replace all addresses and verify the function name and
+# argument positions against a real protocol's testnet transaction.
 
 [account]
 address = "CCHESTACCOUNT"

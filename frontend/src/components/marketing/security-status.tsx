@@ -46,12 +46,12 @@ export function SecurityStatus() {
           </p>
           <p className="m-0">
             <a
-              href="https://github.com/bleu/baradd-roles/blob/master/docs/validations.md"
+              href="https://github.com/bleu/baradd-roles/blob/master/docs/spec.md#threat-model-and-security"
               target="_blank"
               rel="noreferrer"
               className="underline decoration-[#45423c] underline-offset-2 hover:text-surface"
             >
-              Specification and validations log
+              Threat model and security
             </a>
           </p>
         </div>
