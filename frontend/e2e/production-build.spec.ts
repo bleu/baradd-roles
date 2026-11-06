@@ -21,7 +21,7 @@ test.describe("Production build", () => {
     const heroVisual = page.getByTestId("hero-visual");
     await expect(heroVisual).toHaveCSS("border-top-width", "3px");
 
-    await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many." })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many.", level: 1 })).toBeVisible();
     await expect(page.getByRole("link", { name: "How it works" })).toBeVisible();
   });
 });

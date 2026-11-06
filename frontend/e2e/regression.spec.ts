@@ -13,13 +13,13 @@ test.describe("Regression", () => {
   test("plain landing page load has no console errors or hydration warnings", async ({ page }) => {
     const messages = collectConsoleErrors(page);
     await page.goto("/");
-    await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many." })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many.", level: 1 })).toBeVisible();
     expect(messages).toEqual([]);
   });
 
   test("visiting the homepage does not rewrite the URL with default demo state", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many." })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many.", level: 1 })).toBeVisible();
     // The demo's URL-sync effect must not fire for default state (no signed
     // keys, default action, classic off) — otherwise every plain visit to "/"
     // gets its address bar dirtied with "?action=exit-to-treasury#demo"
@@ -31,8 +31,8 @@ test.describe("Regression", () => {
     page,
   }) => {
     const messages = collectConsoleErrors(page);
-    await page.goto("/?signed=O1&action=exit-to-treasury#demo");
-    await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many." })).toBeVisible();
+    await page.goto("/?signed=O1&action=exit#demo");
+    await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many.", level: 1 })).toBeVisible();
 
     // Known, accepted cost of the Demo component's useState(readFromUrl) lazy
     // initializer: it reads shareable state from the URL synchronously before

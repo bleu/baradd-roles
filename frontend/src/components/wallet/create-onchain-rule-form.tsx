@@ -6,6 +6,7 @@ import { PolicyBuilder } from "@/components/wallet/policy-builder";
 import { RoleGroupsEditor } from "@/components/wallet/role-groups-editor";
 import { ConnectedWalletsPanel } from "@/components/wallet/connected-wallets-panel";
 import { HonestLimit } from "@/components/ui/honest-limit";
+import { Tag } from "@/components/ui/tag";
 import { buildAddRuleTransaction } from "@/lib/onchain/build-add-rule-tx";
 import { signAndSubmitAdminCall, type AdminCallSigner } from "@/lib/onchain/sign-admin-call";
 import { decodeNewRuleId } from "@/lib/onchain/decode-new-rule-id";
@@ -105,7 +106,12 @@ export function CreateOnchainRuleForm({ accountId }: { accountId: string }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
+    <form
+      onSubmit={onSubmit}
+      className="card-shadow-accent space-y-8 border-t-[12px] border-[3px] border-obsidian bg-surface p-6"
+    >
+      <Tag tone="gold">On-chain · real transactions</Tag>
+
       <HonestLimit>
         This installs a real RolesPolicy (and threshold policy, for any group whose threshold is
         below its signer count) on testnet. Adding a rule is an admin operation — it needs a

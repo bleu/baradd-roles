@@ -1,4 +1,5 @@
 import { Hero } from "@/components/marketing/hero";
+import { WallStrip } from "@/components/marketing/wall-strip";
 import { Problem } from "@/components/marketing/problem";
 import { Demo } from "@/components/marketing/demo/demo";
 import { HowItWorks } from "@/components/marketing/how-it-works";
@@ -13,8 +14,9 @@ import { Closing } from "@/components/marketing/closing";
 
 export default function MarketingHome() {
   return (
-    <div className="divide-y-[3px] divide-line">
+    <div>
       <Hero />
+      <WallStrip />
       <Problem />
       <Demo />
       <HowItWorks />

@@ -19,3 +19,10 @@ export const comingTools = [
   { name: "roles simulate", need: "a Soroban RPC endpoint (or a local fork) and a deployed roles-policy instance" },
   { name: "roles apply", need: "a deployed roles-policy contract address and Smart Account Kit transaction helpers" },
 ];
+
+export const toolStatus = [
+  { command: "roles lint", works: true },
+  { command: "roles diff", works: true },
+  { command: comingTools[0].name, works: false },
+  { command: comingTools[1].name, works: false },
+];

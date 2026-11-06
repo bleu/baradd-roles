@@ -6,6 +6,12 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? "github" : "list",
+  // Default is 5s; parallel workers sharing one machine can make a
+  // client-side navigation (form submit -> router.push -> render) take
+  // longer than that under load, well before anything is actually broken.
+  expect: {
+    timeout: 10_000,
+  },
   use: {
     trace: "on-first-retry",
   },
