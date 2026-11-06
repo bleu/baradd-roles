@@ -1,9 +1,4 @@
-/**
- * "What is real today" — transcribed from the spec, section 2. Single
- * source for the landing page's security/status section and (by hand, for
- * now — see the audit) the README. Keep this in sync with the repository;
- * when something here changes, update README.md's Status section to match.
- */
+// Keep the landing page's component status in sync with the code and README.
 export interface StatusRow {
   component: string;
   state: string;

@@ -1,4 +1,3 @@
-// Section 7.3.
 export const timeline = [
   { time: "03:12", text: "A stablecoin starts to lose its peg." },
   { time: "03:14", text: "The operator on call exits with one signature, and the funds return to the chest." },

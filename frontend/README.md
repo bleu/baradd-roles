@@ -1,38 +1,58 @@
-# Baradd — frontend
+# Baradd frontend
 
-Two route groups, per `Barad landing page design and messaging specification.md`:
+The Next.js frontend provides the product website and treasury interface.
 
-- `app/(marketing)` — the landing page at `/`: hero, an interactive "try to move the treasury" demo, how it works, a real policy example, real CLI output, a comparison of approaches, security/status, audience, roadmap, FAQ.
-- `app/(app)` — the prototype wallet UI at `/app`: browse accounts, inspect their ADMIN/EXIT/ENTRY context rules, and read the installed `RolesPolicy` configuration in plain language. Every screen carries a "Demo data" banner.
+## Routes
 
-`/docs` redirects to `docs/spec.md` in the repository.
+- `app/(marketing)` contains the website at `/`, including an interactive permission demo, configuration examples, and security information.
+- `app/(app)` contains the treasury interface at `/app`.
+- `/docs` redirects to the [technical specification](../docs/spec.md).
 
-## Visual design
+## Account data and signing
 
-Dark palette (obsidian/stone/mist/gold/sky), Cinzel display type, the fortress mark, and the citadel hero photo all come from the user-supplied asset pack in `public/brand/` (`public/brand/design-tokens.css` is upstream of `src/app/globals.css`'s token values — keep them in sync). This departs deliberately from `docs/landing-page-spec.md` section 9's light-theme/no-illustration guidance; see that file's note and the session history for why.
+The treasury interface supports three kinds of account data:
 
-## Status
+| Kind | Storage and behavior |
+| --- | --- |
+| Example accounts | Illustrative data bundled with the app |
+| Local drafts | Browser-local configuration with TOML export; no account is deployed |
+| On-chain accounts | Testnet account, rule, threshold, and policy reads through Soroban RPC |
 
-Illustrative only — `src/lib/mock-data.ts` holds placeholder accounts and policies. Nothing here reads from testnet or mainnet yet; wiring it up needs a deployed `roles-policy` contract and a preset for a real protocol (see `docs/spec.md`, "MVP scope"). Connecting Freighter works today (read-only: it reads the active address and network, it doesn't sign anything). Every factual claim on the landing page traces to `src/content/claims.ts`; `scripts/check-claims.ts` fails the build on a forbidden word or an unqualified "audited."
+Account bookmarks and logical role-group mappings are stored in the browser. Contract state is read from the network.
+
+The account and rule forms build transactions, request wallet signatures, and submit them to testnet. Freighter and Hana are configured signer wallets. Account creation installs the first administrative group, then adds further groups and an optional first permission rule through separate transactions. Rule creation currently uses administrative rule `0`.
+
+Each independently authorizing role group becomes a separate on-chain context rule. Permission rules use `CallContract` for one target contract, with `RolesPolicy` and a threshold policy where needed.
+
+Mainnet is disabled. Protocol action buttons do not execute DeFi transactions. The rule-page CLI buttons display explanations rather than running CLI commands.
+
+The website's interactive demo is separate from these testnet flows. It evaluates a fixed example in the browser without wallet access or RPC calls.
+
+## Visual design and content
+
+Brand assets are in `public/brand/`. Keep the values in `public/brand/design-tokens.css` and `src/app/globals.css` in sync.
+
+Website claims and status content are in `src/content/`. `scripts/check-claims.ts` checks rendered copy for unsupported claims and restricted wording.
 
 ## Development
 
+Install dependencies from the repository root:
+
 ```sh
 pnpm install
-pnpm dev
+pnpm --filter frontend dev
 ```
 
-## Tests
+## Checks
+
+Run from the repository root:
 
 ```sh
-pnpm test          # evaluate() — the demo's pure evaluation logic, the 8 required cases from the spec
-pnpm check-claims   # scans rendered copy for forbidden claims
+pnpm --filter frontend test
+pnpm --filter frontend test:e2e
+pnpm --filter frontend check-claims
+pnpm --filter frontend lint
+pnpm --filter frontend build
 ```
 
-## Build
-
-```sh
-pnpm build
-```
-
-Runs `next build --webpack`. Turbopack's production build has a flaky bug fetching Google Fonts in Next.js 16.4.4 (`Can't resolve '@vercel/turbopack-next/internal/font/google/font'`) that doesn't affect `next dev` — webpack is used for `build` until that's fixed upstream.
+Unit tests cover permission evaluation and interface behavior. Playwright covers browser flows and runs separately from the current CI workflow. The production build uses `next build --webpack`.

@@ -1,6 +1,4 @@
-// A segmented bar showing counted-of-required, per spec section 9
-// ("Components to build"). Color is never the only signal — the numeric
-// label is always shown alongside.
+// Keep the numeric label visible so the result does not depend on color.
 export function SignatureMeter({
   counted,
   required,

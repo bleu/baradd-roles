@@ -11,8 +11,7 @@ export function registerSimulate(program: Command) {
           "",
           "It needs: a Soroban RPC endpoint (or a local fork via soroban-fork), a deployed",
           "roles-policy contract address, and a funded account to replay the call against.",
-          "None of that exists yet for this project — see docs/spec.md, \"MVP scope\" and",
-          "\"Setup and versions\".",
+          "Simulation support must be implemented before these inputs can be used.",
         ].join("\n"),
       );
       process.exitCode = 1;

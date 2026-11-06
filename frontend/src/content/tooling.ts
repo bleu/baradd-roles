@@ -1,6 +1,5 @@
-// Captured by actually running the commands (2026-11-05), not written by
-// hand, per spec section 7.7. Re-capture if examples/*.toml or the CLI's
-// output format changes.
+// Captured from CLI runs on 2026-11-05.
+// Capture again if examples/*.toml or the CLI output format changes.
 export const lintOutput = {
   command: "roles lint examples/exit-vault.toml",
   output: "✓ examples/exit-vault.toml: no findings.",

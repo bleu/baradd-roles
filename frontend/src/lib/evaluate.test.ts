@@ -1,12 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { evaluate, type ActionId, type KeyId } from "./evaluate";
 
-// The 8 required cases from the spec, section 8.4. Case 7's "2 of 3" in the
-// brief looks like a documentation slip — ADMIN's required threshold is 2,
-// not 3, and every other case's "counted of required" (1 of 1, 3 of 3, 1 of
-// 3, 0 of 2) is internally consistent with "required," not "total signers
-// in the rule." We implement the mechanically consistent version (2 of 2)
-// and flag the discrepancy rather than hardcode a contradiction.
+// Required counts are rule thresholds, not the total number of eligible signers.
 describe("evaluate — required demo cases", () => {
   const cases: Array<{
     n: number;
@@ -49,7 +44,7 @@ describe("evaluate — required demo cases", () => {
   });
 });
 
-describe("evaluate — classic multisig toggle (section 8.1 contrast)", () => {
+describe("evaluate — classic multisig toggle", () => {
   it("case 1 and case 3 both need 2 signatures in classic mode", () => {
     const exit = evaluate(["O1"], "exit-to-treasury", true);
     const enter = evaluate(["O1"], "enter", true);

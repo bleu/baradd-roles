@@ -1,9 +1,7 @@
 #!/usr/bin/env tsx
 /**
- * Fails the build if page copy makes a claim the spec forbids. Spec section
- * 12: "fails the build if page text contains 'audited' without 'not' or
- * 'planned' nearby, 'backed by', 'trusted by', 'partner' or 'official', or
- * any word from the avoid list in section 10."
+ * Checks page copy for unsupported audit or endorsement claims and words
+ * from the avoid list below.
  *
  * Scans the files that actually render as page copy — not
  * content/claims.ts itself, which is the rulebook (it legitimately contains

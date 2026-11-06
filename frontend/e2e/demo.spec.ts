@@ -11,7 +11,7 @@ async function signAndAct(page: Page, keys: string[], actionName: string) {
   await page.getByRole("button", { name: actionName }).click();
 }
 
-test.describe("Demo — the 8 required cases (section 8.4), driven through the real UI", () => {
+test.describe("Demo — approval and denial cases through the UI", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/#demo");
   });
@@ -67,7 +67,7 @@ test.describe("Demo — the 8 required cases (section 8.4), driven through the r
   });
 });
 
-test.describe("Demo — classic multisig contrast (section 8.1)", () => {
+test.describe("Demo — classic multisig contrast", () => {
   test("case 1 and case 3 both need 2 signatures in classic mode", async ({ page }) => {
     await page.goto("/#demo");
     await page.getByRole("checkbox", { name: /Classic multisig/ }).check();

@@ -1,9 +1,5 @@
-/**
- * Pure evaluation logic for the "Try to move the chest" demo (spec
- * section 8). No network, no wallet — mirrors the policy contract's
- * semantics (route to a rule, count signers, check the policy, compare to
- * the threshold, deny on first failure) over a fixed, hardcoded example.
- */
+// Local evaluation for the "Try to move the chest" demo.
+// Uses fixed rules and calls; it does not read a network or wallet.
 
 export type RuleId = "EXIT" | "ENTRY" | "ADMIN";
 export type ActionId = "exit-to-treasury" | "exit-outside" | "enter" | "approve" | "change-rules";
@@ -50,8 +46,7 @@ export const RULES: Record<RuleId, RuleDef> = {
   },
 };
 
-/** The classic-multisig toggle (section 8.1): one threshold, any key, and
- * it never inspects the call's destination or arguments. */
+// Classic mode uses one threshold for all keys and does not check call arguments.
 export const CLASSIC_THRESHOLD = 2;
 
 export interface ActionDef {

@@ -1,8 +1,4 @@
-// Spec section 9: an "Honest limit" callout used wherever a section states
-// what is not done yet. Section 13 acceptance checklist requires it in the
-// security section and next to every unfinished feature. "Deposit Wall"
-// styling: a black-bordered strip with an orange "LIMIT" tab — the
-// product's honesty, drawn the same way everywhere.
+// Use this callout for security limits and features that are not built yet.
 export function HonestLimit({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-stretch border-[3px] border-obsidian bg-surface" role="note">

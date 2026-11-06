@@ -1,4 +1,3 @@
-// Transcribed from the spec, section 6 ("Objections and answers").
 export interface FaqItem {
   question: string;
   answer: string;

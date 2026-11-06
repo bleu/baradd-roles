@@ -1,7 +1,5 @@
-// Transcribed from the spec, section 5. Checked 2 November 2026; searches
-// were broad but not exhaustive — phrase gaps as "we found", never "there is
-// no". Every cell traces to a source; nothing here claims a competitor
-// "lacks" a feature without one.
+// Sources checked 2 November 2026. Searches were not exhaustive;
+// describe gaps as "we found" and keep each comparison tied to its source.
 export interface ComparisonRow {
   approach: string;
   examples: string;
@@ -40,7 +38,7 @@ export const comparisonRows: ComparisonRow[] = [
   },
   {
     approach: "Treasury applications",
-    examples: "VaultDAO, Smart Treasury Account (an SCF submission)",
+    examples: "VaultDAO, Smart Treasury Account",
     strength: "Roles, timelocks, spending limits, and payment workflows for organizations",
     gap: "We found no entry/exit semantics for DeFi positions",
     sourceUrl: "https://github.com/Calebux/VaultDAO",
