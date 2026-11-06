@@ -1,10 +1,14 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { StrKey } from "@stellar/stellar-sdk";
 import { findAccount, findRule } from "@/lib/mock-data";
+import { isDraftId } from "@/lib/accounts-store";
 import { RuleKindBadge } from "@/components/rule-kind-badge";
-import { SignerList } from "@/components/signer-list";
+import { RoleGroupsView } from "@/components/role-groups-view";
 import { PolicyView } from "@/components/policy-view";
 import { RuleActions } from "@/components/rule-actions";
+import { DraftRulePage } from "@/components/wallet/draft-rule-page";
+import { OnchainRulePage } from "@/components/wallet/onchain-rule-page";
 
 export default async function RulePage({
   params,
@@ -12,8 +16,16 @@ export default async function RulePage({
   params: Promise<{ id: string; ruleId: string }>;
 }) {
   const { id, ruleId } = await params;
+
+  // Draft rules only exist in the browser's localStorage, not on the
+  // server, so they're resolved client-side instead of via findRule().
+  if (isDraftId(id)) return <DraftRulePage accountId={id} ruleId={Number(ruleId)} />;
+
   const account = findAccount(id);
   const rule = findRule(id, Number(ruleId));
+  if (!account && StrKey.isValidContract(id)) {
+    return <OnchainRulePage key={`${id}-${ruleId}`} accountId={id} ruleId={Number(ruleId)} />;
+  }
   if (!account || !rule) notFound();
 
   return (
@@ -28,28 +40,24 @@ export default async function RulePage({
       </div>
 
       <section className="mt-10">
-        <h2 className="text-xs tracking-[0.2em] text-mist uppercase">
-          Signers · {rule.threshold} of {rule.signers.length} required
-        </h2>
+        <h2 className="text-xs tracking-[0.2em] text-mist uppercase">Signers</h2>
         <div className="mt-3">
-          <SignerList signers={rule.signers} threshold={rule.threshold} />
+          <RoleGroupsView roleGroups={rule.roleGroups} />
         </div>
       </section>
 
-      {rule.config ? (
+      {rule.target ? (
         <section className="mt-10">
-          <h2 className="text-xs tracking-[0.2em] text-mist uppercase">
-            RolesPolicy · {rule.config.mode === "Exit" ? "exit" : "entry"} mode
-          </h2>
+          <h2 className="text-xs tracking-[0.2em] text-mist uppercase">RolesPolicy</h2>
           <p className="mt-2 text-sm text-mist">
             Deny-by-default: any contract, function, or argument not listed below is rejected.
           </p>
           <div className="mt-3">
-            <PolicyView config={rule.config} />
+            <PolicyView target={rule.target} />
           </div>
         </section>
       ) : (
-        <section className="mt-10 rounded-2xl border border-line bg-surface p-4 text-sm text-mist">
+        <section className="mt-10 rounded-2xl border-[3px] border-line bg-surface p-4 text-sm text-mist">
           This is the Admin rule — it has no RolesPolicy attached. Its signers can change rules and
           install or remove policies on the other rules.
         </section>

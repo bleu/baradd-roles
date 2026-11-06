@@ -13,7 +13,7 @@ import { Closing } from "@/components/marketing/closing";
 
 export default function MarketingHome() {
   return (
-    <div className="divide-y divide-line">
+    <div className="divide-y-[3px] divide-line">
       <Hero />
       <Problem />
       <Demo />

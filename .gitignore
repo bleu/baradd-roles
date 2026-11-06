@@ -28,3 +28,7 @@ out/
 *.swp
 barad-brand-assets.zip
 barad_brand_assets/
+
+# scratch notes, not part of the project
+/thoughts/
+.vercel

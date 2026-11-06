@@ -1,20 +1,20 @@
-# Illustrative only — CDEFINDEX/GOPERATOR* are placeholders, not real
+# Illustrative only — CEXAMPLEVAULT/GOPERATOR* are placeholders, not real
 # deployed addresses. See docs/spec.md, "Week 1", item 3: the exact function
-# names and arguments still need verifying against a real DeFindex testnet
+# names and arguments still need verifying against a real protocol's testnet
 # transaction before this is used for anything but a CLI demo.
 
 [account]
-address = "CTREASURYACCOUNT"
+address = "CCHESTACCOUNT"
 
 [[rule]]
-name = "exit-defindex"
+name = "exit-vault"
 mode = "exit"
 threshold = 1
 signers = ["GOPERATOR1", "GOPERATOR2"]
 
   [[rule.target]]
-  contract = "CDEFINDEXVAULT"
-  label = "DeFindex vault"
+  contract = "CEXAMPLEVAULT"
+  label = "Example vault"
 
     [[rule.target.fn]]
     name = "withdraw"

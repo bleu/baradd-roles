@@ -1,0 +1,12 @@
+target/
+node_modules/
+frontend/node_modules/
+sdk/node_modules/
+cli/node_modules/
+frontend/.next/
+.next/
+test-results/
+playwright-report/
+thoughts/
+barad_brand_assets/
+barad-brand-assets.zip

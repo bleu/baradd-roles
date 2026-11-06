@@ -12,13 +12,13 @@ export function HowItWorks() {
       <h2 className="font-display text-3xl text-pale">How it works</h2>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-2xl border border-line">
-          <div className="grid grid-cols-3 divide-x divide-line border-b border-line bg-surface text-center text-xs text-mist">
+        <div className="overflow-hidden rounded-2xl border-[3px] border-line">
+          <div className="grid grid-cols-3 divide-x divide-line border-b-[3px] border-line bg-surface text-center text-xs text-mist">
             <div className="p-3">Operators</div>
             <div className="p-3">Approvers</div>
             <div className="p-3">Governance</div>
           </div>
-          <div className="grid grid-cols-3 divide-x divide-line border-b border-line text-center text-sm">
+          <div className="grid grid-cols-3 divide-x divide-line border-b-[3px] border-line text-center text-sm">
             <div className="p-3 text-pale">EXIT rule<br /><span className="text-xs text-mist">1 signature</span></div>
             <div className="p-3 text-pale">ENTRY rule<br /><span className="text-xs text-mist">M signatures</span></div>
             <div className="p-3 text-pale">ADMIN rule<br /><span className="text-xs text-mist">N of M</span></div>

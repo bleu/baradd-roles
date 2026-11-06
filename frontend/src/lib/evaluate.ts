@@ -1,5 +1,5 @@
 /**
- * Pure evaluation logic for the "Try to move the treasury" demo (spec
+ * Pure evaluation logic for the "Try to move the chest" demo (spec
  * section 8). No network, no wallet — mirrors the policy contract's
  * semantics (route to a rule, count signers, check the policy, compare to
  * the threshold, deny on first failure) over a fixed, hardcoded example.
@@ -34,7 +34,7 @@ export const RULES: Record<RuleId, RuleDef> = {
     id: "EXIT",
     signers: ["O1", "O2"],
     threshold: 1,
-    allows: "withdraw on the example protocol, only if the destination is the treasury",
+    allows: "withdraw on the example protocol, only if the destination is the chest",
   },
   ENTRY: {
     id: "ENTRY",
@@ -67,10 +67,10 @@ export interface ActionDef {
 export const ACTIONS: Record<ActionId, ActionDef> = {
   "exit-to-treasury": {
     id: "exit-to-treasury",
-    label: "Exit the position to the treasury",
+    label: "Exit the position to the chest",
     rule: "EXIT",
     satisfiesPolicy: true,
-    callDescription: "withdraw() with destination = the treasury",
+    callDescription: "withdraw() with destination = the chest",
     denyReason: "",
   },
   "exit-outside": {
@@ -78,9 +78,9 @@ export const ACTIONS: Record<ActionId, ActionDef> = {
     label: "Exit the position to an outside address",
     rule: "EXIT",
     satisfiesPolicy: false,
-    callDescription: "withdraw() with destination = an address outside the treasury",
+    callDescription: "withdraw() with destination = an address outside the chest",
     denyReason:
-      "The exit rule only allows the treasury as destination, even though the signature is valid.",
+      "The exit rule only allows the chest as destination, even though the signature is valid.",
   },
   enter: {
     id: "enter",

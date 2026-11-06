@@ -47,14 +47,6 @@ export const comparisonRows: ComparisonRow[] = [
     sourceLabel: "VaultDAO",
   },
   {
-    approach: "Protocol-level roles",
-    examples: "DeFindex vault roles (Manager, Emergency Manager, Rebalance Manager), Templar vault roles",
-    strength: "Emergency exit roles built into the protocol",
-    gap: "Exist only where each protocol builds them, and differ per protocol",
-    sourceUrl: "https://docs.defindex.io/whitepaper/10-whitepaper/02-contracts/01-vault-contract",
-    sourceLabel: "DeFindex vault contract",
-  },
-  {
     approach: "MPC custody with policy engines",
     examples: "Fireblocks, Dfns, BitGo",
     strength: "Mature operations, approval workflows",

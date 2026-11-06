@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test.describe("Landing page", () => {
   test("loads with the expected title and hero", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(/Barad/);
+    await expect(page).toHaveTitle(/Baradd/);
     await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many." })).toBeVisible();
     await expect(page.getByText("Early prototype · testnet demo in progress")).toBeVisible();
   });
@@ -12,7 +12,7 @@ test.describe("Landing page", () => {
     await page.goto("/");
     const headings = page.locator("h2");
     await expect(headings).toContainText([
-      "Try to move the treasury",
+      "Try to move the chest",
       "How it works",
       "What a policy looks like",
       "Tooling",
@@ -22,21 +22,21 @@ test.describe("Landing page", () => {
       "Roadmap",
       "Frequently asked",
       "Follow the build",
-    ], { useInnerText: true });
+    ]);
   });
 
   test("the hero CTA scrolls to the demo section", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: "Try to move the treasury" }).click();
+    await page.getByRole("link", { name: "Try to move the chest" }).click();
     await expect(page).toHaveURL(/#demo$/);
-    await expect(page.getByRole("heading", { name: "Try to move the treasury" })).toBeInViewport();
+    await expect(page.getByRole("heading", { name: "Try to move the chest" })).toBeInViewport();
   });
 
   test("'Open the prototype' navigates to the wallet app", async ({ page }) => {
     await page.goto("/");
     await page.getByRole("link", { name: "Open the prototype" }).click();
     await expect(page).toHaveURL(/\/app$/);
-    await expect(page.getByRole("heading", { name: "Treasuries" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Chests" })).toBeVisible();
   });
 
   test("nav section links scroll to their targets", async ({ page }) => {
@@ -60,11 +60,9 @@ test.describe("Landing page", () => {
     await expect(question).toHaveAttribute("aria-expanded", "false");
   });
 
-  test("the hero backdrop image loads successfully", async ({ page }) => {
+  test("the hero visual placeholder is present", async ({ page }) => {
     await page.goto("/");
-    const img = page.locator('img[alt=""]').first();
-    await expect(img).toBeVisible();
-    const naturalWidth = await img.evaluate((el: HTMLImageElement) => el.naturalWidth);
-    expect(naturalWidth).toBeGreaterThan(0);
+    await expect(page.getByTestId("hero-visual")).toBeVisible();
+    await expect(page.getByText("ASSET C1")).toBeVisible();
   });
 });

@@ -12,7 +12,7 @@ export function WhyNotAlternatives() {
 
       <div className="mt-8 space-y-4">
         {comparisonRows.map((row) => (
-          <details key={row.approach} className="group rounded-2xl border border-line open:bg-surface">
+          <details key={row.approach} className="group rounded-2xl border-[3px] border-line open:bg-surface">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-pale">
               <span className="font-medium">{row.approach}</span>
               <span className="text-xs text-mist">{row.examples}</span>

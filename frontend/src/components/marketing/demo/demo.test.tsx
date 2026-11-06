@@ -16,7 +16,7 @@ afterEach(() => {
 describe("Demo — rendering", () => {
   it("defaults to the exit-to-treasury action with no keys signed, and denies it", () => {
     render(<Demo />);
-    expect(screen.getByRole("button", { name: "Exit the position to the treasury" })).toHaveAttribute(
+    expect(screen.getByRole("button", { name: "Exit the position to the chest" })).toHaveAttribute(
       "aria-pressed",
       "true",
     );
@@ -27,7 +27,7 @@ describe("Demo — rendering", () => {
   it("always shows the 'simulated in your browser' caption", () => {
     render(<Demo />);
     expect(
-      screen.getByText("Simulated in your browser. Not a live treasury. A testnet version is coming."),
+      screen.getByText("Simulated in your browser. Not a live chest. A testnet version is coming."),
     ).toBeInTheDocument();
   });
 });
@@ -52,7 +52,7 @@ describe("Demo — interaction", () => {
 
     expect(screen.getByText("Denied")).toBeInTheDocument();
     expect(
-      screen.getByText("The exit rule only allows the treasury as destination, even though the signature is valid."),
+      screen.getByText("The exit rule only allows the chest as destination, even though the signature is valid."),
     ).toBeInTheDocument();
   });
 

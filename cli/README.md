@@ -1,9 +1,9 @@
-# @barad/cli
+# @baradd/cli
 
 `roles` — the CLI from docs/spec.md's "Tooling (CLI and SDK)" section.
 
 ```sh
-pnpm --filter @barad/cli exec tsx src/index.ts <command>
+pnpm --filter @baradd/cli exec tsx src/index.ts <command>
 ```
 
 | Command | Status |
@@ -13,4 +13,4 @@ pnpm --filter @barad/cli exec tsx src/index.ts <command>
 | `roles simulate <config> <call>` | Not implemented. Needs a Soroban RPC endpoint/fork and a deployed `roles-policy` instance. |
 | `roles apply <config>` | Not implemented. Needs a deployed `roles-policy` contract address and Smart Account Kit transaction helpers. |
 
-See `examples/*.toml` for the config file shape, and `@barad/sdk` (`../sdk`) for the underlying types, schema, lint, and diff logic.
+See `examples/*.toml` for the config file shape, and `@baradd/sdk` (`../sdk`) for the underlying types, schema, lint, and diff logic.

@@ -1,18 +1,18 @@
-# A deliberately "widened" version of defindex-entry.toml, for demoing
+# A deliberately "widened" version of entry-vault.toml, for demoing
 # `roles diff`: the deposit cap went up 10x and the threshold dropped to 1.
 
 [account]
-address = "CTREASURYACCOUNT"
+address = "CCHESTACCOUNT"
 
 [[rule]]
-name = "entry-defindex"
+name = "entry-vault"
 mode = "entry"
 threshold = 1
 signers = ["GOPERATOR1", "GAPPROVER1", "GAPPROVER2"]
 
   [[rule.target]]
-  contract = "CDEFINDEXVAULT"
-  label = "DeFindex vault"
+  contract = "CEXAMPLEVAULT"
+  label = "Example vault"
 
     [[rule.target.fn]]
     name = "deposit"
@@ -38,7 +38,7 @@ signers = ["GOPERATOR1", "GAPPROVER1", "GAPPROVER2"]
       op = "eq"
       arg = 1
       type = "address"
-      value = "CDEFINDEXVAULT"
+      value = "CEXAMPLEVAULT"
 
     [[rule.target.fn]]
     name = "approve"
@@ -51,4 +51,4 @@ signers = ["GOPERATOR1", "GAPPROVER1", "GAPPROVER2"]
       op = "eq"
       arg = 1
       type = "address"
-      value = "CDEFINDEXVAULT"
+      value = "CEXAMPLEVAULT"

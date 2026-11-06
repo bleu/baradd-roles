@@ -18,20 +18,20 @@ export const statusRows: StatusRow[] = [
     pageMayAsSay: "Implemented and tested. Not audited. Not deployed.",
   },
   {
-    component: "@barad/sdk and @barad/cli: lint, diff",
+    component: "@baradd/sdk and @baradd/cli: lint, diff",
     state: "Real, offline, work on local TOML files.",
     pageMayAsSay: "Lint and diff a policy before you sign it.",
   },
   {
-    component: "@barad/cli: simulate, apply",
+    component: "@baradd/cli: simulate, apply",
     state: "Honest stubs that explain what infrastructure they need.",
     pageMayAsSay: "Not presented as working.",
   },
   {
     component: "frontend",
     state:
-      "Next.js UI over illustrative data in mock-data.ts: treasury dashboard, ADMIN/EXIT/ENTRY rule cards, plain-language policy viewer; Freighter connect is read-only.",
-    pageMayAsSay: "Every figure labeled “demo data.” No live treasury implied.",
+      "Next.js UI over illustrative data in mock-data.ts: chest dashboard, ADMIN/EXIT/ENTRY rule cards, plain-language policy viewer; Freighter connect is read-only.",
+    pageMayAsSay: "Every figure labeled “demo data.” No live chest implied.",
   },
   {
     component: "Fork, fuzz and invariant tests; CI",
@@ -66,4 +66,4 @@ export const statusRows: StatusRow[] = [
 ];
 
 export const honestLimit =
-  "If an operator key is stolen, the thief can only send funds back to the treasury — they cannot enter a position, approve a token, or change the rules. They can still force exits, which has a cost; per-period caps and delays are planned, not built.";
+  "If an operator key is stolen, the thief can only send funds back to the chest — they cannot enter a position, approve a token, or change the rules. They can still force exits, which has a cost; per-period caps and delays are planned, not built.";

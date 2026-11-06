@@ -1,17 +1,17 @@
-# Illustrative only — see defindex-exit.toml.
+# Illustrative only — see exit-vault.toml.
 
 [account]
-address = "CTREASURYACCOUNT"
+address = "CCHESTACCOUNT"
 
 [[rule]]
-name = "entry-defindex"
+name = "entry-vault"
 mode = "entry"
 threshold = 2
 signers = ["GOPERATOR1", "GAPPROVER1", "GAPPROVER2"]
 
   [[rule.target]]
-  contract = "CDEFINDEXVAULT"
-  label = "DeFindex vault"
+  contract = "CEXAMPLEVAULT"
+  label = "Example vault"
 
     [[rule.target.fn]]
     name = "deposit"
@@ -37,7 +37,7 @@ signers = ["GOPERATOR1", "GAPPROVER1", "GAPPROVER2"]
       op = "eq"
       arg = 1
       type = "address"
-      value = "CDEFINDEXVAULT"
+      value = "CEXAMPLEVAULT"
 
     [[rule.target.fn]]
     name = "approve"
@@ -50,4 +50,4 @@ signers = ["GOPERATOR1", "GAPPROVER1", "GAPPROVER2"]
       op = "eq"
       arg = 1
       type = "address"
-      value = "CDEFINDEXVAULT"
+      value = "CEXAMPLEVAULT"

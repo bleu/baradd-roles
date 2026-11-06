@@ -11,7 +11,7 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className="divide-y divide-line border-y border-line">
+    <div className="divide-y-[3px] divide-line border-y border-line">
       {items.map((item, i) => {
         const open = openIndex === i;
         const panelId = `accordion-panel-${i}`;

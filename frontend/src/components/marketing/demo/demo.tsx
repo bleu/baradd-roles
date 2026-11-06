@@ -78,23 +78,23 @@ export function Demo() {
 
   return (
     <section id="demo" className="mx-auto max-w-[1120px] px-6 py-16">
-      <h2 className="font-display text-3xl text-pale">Try to move the treasury</h2>
+      <h2 className="font-display text-3xl text-pale">Try to move the chest</h2>
       <p className="mt-2 max-w-2xl text-mist">
-        Simulated in your browser. Not a live treasury. A testnet version is coming.
+        Simulated in your browser. Not a live chest. A testnet version is coming.
       </p>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <button
           type="button"
           onClick={() => applyShortcut("3am-exit")}
-          className="rounded-2xl border border-line px-3 py-1.5 text-sm text-pale transition hover:border-mist"
+          className="rounded-2xl border-[3px] border-line px-3 py-1.5 text-sm text-pale transition hover:border-mist"
         >
           A 3 a.m. exit
         </button>
         <button
           type="button"
           onClick={() => applyShortcut("stolen-key")}
-          className="rounded-2xl border border-line px-3 py-1.5 text-sm text-pale transition hover:border-mist"
+          className="rounded-2xl border-[3px] border-line px-3 py-1.5 text-sm text-pale transition hover:border-mist"
         >
           A stolen operator key
         </button>
@@ -123,7 +123,7 @@ export function Demo() {
                   onClick={() => toggleKey(key)}
                   className={`rounded-2xl border px-3 py-1.5 text-sm transition ${
                     active
-                      ? "border-pale bg-pale text-obsidian"
+                      ? "border-obsidian bg-gold text-obsidian"
                       : "border-line text-pale hover:border-mist"
                   }`}
                 >
@@ -155,7 +155,7 @@ export function Demo() {
 
         <div aria-live="polite">
           <h3 className="text-xs tracking-[0.15em] text-mist uppercase">Result</h3>
-          <div className="mt-3 rounded-2xl border border-line p-5">
+          <div className="mt-3 rounded-2xl border-[3px] border-line p-5">
             <div className="flex items-center gap-2">
               <span
                 aria-hidden
@@ -184,7 +184,7 @@ export function Demo() {
               {whyOpen ? "Hide why" : "Why?"}
             </button>
             {whyOpen && (
-              <ol className="mt-3 space-y-2 border-t border-line pt-3">
+              <ol className="mt-3 space-y-2 border-t-[3px] border-line pt-3">
                 {result.steps.map((step, i) => (
                   <li key={i} className="text-xs">
                     <span className={step.passed ? "text-approved" : "text-denied"}>

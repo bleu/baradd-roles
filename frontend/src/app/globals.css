@@ -1,40 +1,51 @@
 @import "tailwindcss";
 
-/* Dark "premium wallet" palette, from the user-supplied brand asset pack
- * (public/brand/, 2026-11-03) — design-tokens.css is the source of truth
- * for these exact values. This deliberately departs from "Barad landing
- * page design and messaging specification.md" section 9's light-theme/
- * no-illustration guidance; the user reviewed that guidance and asked for
- * this direction explicitly. The content, claims, and honesty rules from
- * that spec are unchanged — only the visual system is. */
+/* "Deposit Wall" (Direction C) — a brutalist deposit-box system: concrete
+ * ground, thick ink borders, hard offset shadows (no blur), zero radius,
+ * one signal-orange accent, and a literal keyhole icon as the device for
+ * showing a rule's signature threshold. Replaces the earlier dark-citadel
+ * palette (design-tokens.css, public/brand/) wholesale — see
+ * docs/redesign-brief.md and the approved mockups for the full brief.
+ *
+ * Existing utility class NAMES (text-pale, bg-surface, border-line, etc.)
+ * are kept and REVALUED here rather than renamed at every call site: most
+ * of them already carry the right semantic role (pale = primary text,
+ * mist = secondary text, surface = card background, line = the border
+ * color, gold = the one accent) — only the role of "obsidian" flips, from
+ * "the whole page's dark background" to "near-black ink used for text,
+ * borders, and dark accent bands on an otherwise light page."
+ */
 :root {
-  --obsidian: #0b0d10;
-  --surface: #1f2329;
-  --surface-raised: #272c33;
-  --mist: #6b7280;
-  --line: rgba(230, 225, 214, 0.12);
+  --obsidian: #111111; /* ink: text, borders, dark bands — no longer the page background */
+  --surface: #ecebe6; /* plate: cards, panels */
+  --surface-raised: #f8f7f3; /* fields, nested panels */
+  --mist: #45423c; /* steel: secondary text */
+  --line: #111111; /* ink borders are solid, not a faint hairline */
 
-  --pale: #e6e1d6;
+  --pale: #111111; /* ink: primary text color (the page is light now) */
 
-  --gold: #d4af7c;
-  --gold-bright: #e8c493;
-  --gold-ink: #1a1410;
+  --gold: #e8541f; /* signal orange: the one accent, primary actions, "the number" */
+  --gold-bright: #f2c9a8; /* warm highlight for syntax/code accents */
+  --gold-ink: #111111; /* text drawn on top of the orange accent */
 
-  --sky: #3b82f6;
+  --sky: #111111;
 
-  --approved: #3fb881;
-  --denied: #e06a5c;
+  --approved: #1f7a3d;
+  --denied: #b3261e;
 
-  --background: var(--obsidian);
+  --hatch: #cbc8c0; /* locked / disabled diagonal hatching */
+  --wall: #d8d5ce; /* concrete: the page background */
+
+  --background: var(--wall);
   --foreground: var(--pale);
   --border: var(--line);
 
-  --radius-card: 1rem;
-  --shadow-card: 0 24px 80px rgba(0, 0, 0, 0.38);
+  --radius-card: 0px;
+  --shadow-card: 6px 6px 0 var(--obsidian);
 
-  --font-display: var(--font-cinzel);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-mono-ibm);
+  --font-display: var(--font-archivo);
+  --font-sans: var(--font-archivo);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 @theme inline {
@@ -50,6 +61,8 @@
   --color-sky: var(--sky);
   --color-approved: var(--approved);
   --color-denied: var(--denied);
+  --color-hatch: var(--hatch);
+  --color-wall: var(--wall);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -58,6 +71,14 @@
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+
+  /* Zero radius everywhere except full circles (status dots, key markers). */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
 }
 
 body {
@@ -66,19 +87,63 @@ body {
   font-family: var(--font-sans);
 }
 
-::selection {
-  background: var(--gold);
-  color: var(--gold-ink);
+h1,
+h2,
+h3,
+.font-display {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
 }
 
-/* Soft elevation for card-like surfaces — design-tokens.css's
-   --barad-shadow, applied through one class so the value stays in sync. */
+::selection {
+  background: var(--gold);
+  color: var(--gold-bright);
+}
+
+/* Hard offset shadow (no blur, ever) for card-like surfaces. */
 .card-shadow {
   box-shadow: var(--shadow-card);
 }
 
-/* A soft radial glow, used sparingly behind the hero mark and major CTAs —
-   the one atmospheric touch carried over from the reference. */
+/* The accent variant: same hard shadow, cast in signal orange — used for
+   the one "most important card" per section (the result panel, a CTA
+   card, the on-chain review frame). */
+.card-shadow-accent {
+  box-shadow: 6px 6px 0 var(--gold);
+}
+
+/* Diagonal hatching for a locked/disabled control (mainnet, a locked
+   button) — reads as a shut shutter, deliberately. */
+.hatch {
+  background-image: repeating-linear-gradient(135deg, var(--hatch) 0 6px, var(--wall) 6px 12px);
+}
+
+/* A quiet dark ground for contrast sections on the marketing page (the
+   interactive demo, the policy/tooling/status sections, the closing CTA). */
+.on-ink {
+  background: var(--obsidian);
+  color: var(--surface);
+}
+
+/* The one primary-action button style: signal orange, hard black shadow. */
+.btn-primary {
+  background: var(--gold);
+  color: var(--obsidian);
+  box-shadow: 5px 5px 0 var(--obsidian);
+}
+.btn-primary:hover {
+  opacity: 0.92;
+}
+
+/* A locked/disabled action — diagonal hatching, never clickable. */
+.btn-locked {
+  background-image: repeating-linear-gradient(135deg, var(--hatch) 0 6px, var(--wall) 6px 12px);
+  color: var(--mist);
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
 .gold-glow {
   position: relative;
 }
@@ -98,7 +163,7 @@ body {
   top: 0;
   z-index: 100;
   background: var(--pale);
-  color: var(--obsidian);
+  color: var(--wall);
   padding: 0.75rem 1rem;
 }
 .skip-link:focus {

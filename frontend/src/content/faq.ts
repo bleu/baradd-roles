@@ -13,12 +13,12 @@ export const faqItems: FaqItem[] = [
   {
     question: "Why not a custody provider's policy engine?",
     answer:
-      "Those engines run on the vendor's infrastructure and are mature operationally. Barad's rules are enforced by your account's contract. Choose by what you want to trust.",
+      "Those engines run on the vendor's infrastructure and are mature operationally. Baradd's rules are enforced by your account's contract. Choose by what you want to trust.",
   },
   {
     question: "OpenZeppelin already has policies",
     answer:
-      "Yes, and Barad is built on them. Per its v0.7.0 audit, OpenZeppelin's context rules scope by contract address. Barad adds function and argument conditions and the entry/exit structure. Libraries such as Perch and Mandate also exist, and Barad is meant to sit alongside them.",
+      "Yes, and Baradd is built on them. Per its v0.7.0 audit, OpenZeppelin's context rules scope by contract address. Baradd adds function and argument conditions and the entry/exit structure. Libraries such as Perch and Mandate also exist, and Baradd is meant to sit alongside them.",
   },
   {
     question: "Is it audited?",
@@ -28,7 +28,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "What if an operator key is stolen?",
     answer:
-      "The key can only call listed exit functions and only send funds back to the treasury. It cannot enter a position, approve a token, or change the rules. It can still force exits, which has a cost; caps and delays are on the roadmap.",
+      "The key can only call listed exit functions and only send funds back to the chest. It cannot enter a position, approve a token, or change the rules. It can still force exits, which has a cost; caps and delays are on the roadmap.",
   },
   {
     question: "Which wallets can sign?",

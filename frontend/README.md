@@ -1,4 +1,4 @@
-# Barad — frontend
+# Baradd — frontend
 
 Two route groups, per `Barad landing page design and messaging specification.md`:
 

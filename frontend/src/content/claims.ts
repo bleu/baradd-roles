@@ -36,7 +36,7 @@ export const claims: Record<string, Claim> = {
     status:
       "Implemented (Eq, OneOf, EqSelf, Range). Not unique — Perch and Mandate also express function/argument constraints.",
     safePhrasing:
-      "Conditions on the function and its arguments, such as “the destination is the treasury.”",
+      "Conditions on the function and its arguments, such as “the destination is the chest.”",
     neverSay: ["first", "only", "nobody else does this"],
   },
   "openzeppelin-contract-scope-only": {

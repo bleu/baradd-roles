@@ -1,4 +1,4 @@
-import { parse } from "smol-toml";
+import { parse, stringify } from "smol-toml";
 import { configFileSchema } from "./schema.js";
 import type { ConfigFile } from "./types.js";
 
@@ -18,4 +18,14 @@ export function parseConfigFile(toml: string): ConfigFile {
     throw new ConfigValidationError(issues);
   }
   return result.data;
+}
+
+/**
+ * Serializes a config back to the same TOML shape `parseConfigFile` reads
+ * (`[account]`, `[[rule]]`, `[[rule.target]]`, ...). Round-trips through
+ * `parseConfigFile` by construction, since `ConfigFile`'s nested arrays of
+ * objects are exactly what smol-toml renders as array-of-tables.
+ */
+export function stringifyConfigFile(config: ConfigFile): string {
+  return stringify(config);
 }

@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import type { Command } from "commander";
-import { parseConfigFile, diffConfigs } from "@barad/sdk";
+import { parseConfigFile, diffConfigs } from "@baradd/sdk";
 
 export function registerDiff(program: Command) {
   program

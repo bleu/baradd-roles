@@ -1,8 +1,11 @@
-// Mirrors crates/roles-config/src/lib.rs. Kept in plain, JSON-friendly shapes
-// (amounts as strings, since JS numbers can't hold i128) so the same types
-// can later be produced by reading a deployed RolesPolicy's `get_config`.
+// Mirrors crates/roles-config/src/lib.rs, minus `mode`: the deployed
+// roles-policy contract's `enforce()` never reads it (see
+// contracts/roles-policy/src/eval.rs) — it's an inert label on the
+// already-deployed contract's storage type, not a behavior. The app no
+// longer asks the user to pick an Exit/Entry "kind"; every non-admin rule is
+// just a contract + functions + argument conditions + who can authorize it.
 
-export type Mode = "Exit" | "Entry";
+export type CondValueType = "u32" | "i128" | "address" | "symbol";
 
 export type CondValue =
   | { kind: "u32"; value: number }
@@ -21,15 +24,11 @@ export interface FnRule {
   conds: Cond[];
 }
 
+/** A rule's one target contract and the functions on it this rule covers. */
 export interface Target {
   contract: string;
   label?: string;
   fns: FnRule[];
-}
-
-export interface RolesConfig {
-  mode: Mode;
-  targets: Target[];
 }
 
 export interface Signer {
@@ -37,17 +36,36 @@ export interface Signer {
   label?: string;
 }
 
-export type RuleKind = "Admin" | "Exit" | "Entry";
+/**
+ * Who can authorize this rule, independently of a signer's other
+ * memberships: a Governance signer doesn't make someone eligible on an
+ * Operator group, and vice versa. Each enabled role is its own
+ * threshold-of-signers check; satisfying ANY one role group is enough —
+ * they're independent paths, not pooled together. Maps 1:1 to a separate
+ * on-chain context rule per enabled role (see lib/onchain/).
+ */
+export type SignerRole = "governance" | "admin" | "operator";
+
+export interface RoleGroup {
+  role: SignerRole;
+  signers: Signer[];
+  threshold: number;
+}
+
+/**
+ * "Admin" is the one real structural distinction (it's a `Default`-type
+ * context rule that can change rules/policies at all); every other rule is
+ * just "Rule" — scoped to one contract, with its own role groups.
+ */
+export type RuleKind = "Admin" | "Rule";
 
 export interface ContextRule {
   id: number;
   kind: RuleKind;
   name: string;
-  threshold: number;
-  signers: Signer[];
-  protocolLabel?: string;
-  /** Only Exit/Entry rules install a RolesPolicy. */
-  config?: RolesConfig;
+  roleGroups: RoleGroup[];
+  /** Only present for kind "Rule" — Admin rules have no target contract. */
+  target?: Target;
 }
 
 export interface SmartAccount {

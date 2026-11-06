@@ -1,28 +1,23 @@
 import type { Metadata } from "next";
-import { Cinzel, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "700", "800"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-});
-
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-mono-ibm",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Barad: a treasury wallet that retreats fast, advances slowly",
+  title: "Baradd: a chest wallet that retreats fast, advances slowly",
   description:
-    "A treasury wallet for Soroban smart accounts: one signature to exit a DeFi position, more to enter. Early prototype, open source.",
+    "A chest wallet for Soroban smart accounts: one signature to exit a DeFi position, more to enter. Early prototype, open source.",
 };
 
 export default function RootLayout({
@@ -32,9 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${cinzel.variable} ${inter.variable} ${plexMono.variable} antialiased`}>
-        {children}
-      </body>
+      <body className={`${archivo.variable} ${jetbrainsMono.variable} antialiased`}>{children}</body>
     </html>
   );
 }

@@ -28,7 +28,7 @@ export function ConnectWalletButton() {
 
   if (wallet) {
     return (
-      <div className="flex items-center gap-2 rounded-2xl border border-line px-3 py-1.5 text-sm text-pale">
+      <div className="flex items-center gap-2 rounded-2xl border-[3px] border-line px-3 py-1.5 text-sm text-pale">
         <span className="h-1.5 w-1.5 rounded-full bg-approved" />
         <span className="font-sans tracking-wide">{shortAddr(wallet.address)}</span>
       </div>
@@ -40,7 +40,7 @@ export function ConnectWalletButton() {
       <button
         onClick={onConnect}
         disabled={pending}
-        className="rounded-2xl border border-line bg-surface px-3 py-1.5 text-sm text-pale transition hover:border-mist disabled:opacity-60"
+        className="rounded-2xl border-[3px] border-line bg-surface px-3 py-1.5 text-sm text-pale transition hover:border-mist disabled:opacity-60"
       >
         {pending ? "Opening Freighter…" : "Connect wallet"}
       </button>

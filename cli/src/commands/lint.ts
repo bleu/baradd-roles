@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import type { Command } from "commander";
-import { ConfigValidationError, parseConfigFile, lintConfig, type LintFinding } from "@barad/sdk";
+import { ConfigValidationError, parseConfigFile, lintConfig, type LintFinding } from "@baradd/sdk";
 
 export function registerLint(program: Command) {
   program

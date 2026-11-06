@@ -33,7 +33,7 @@ export function RuleActions() {
         ))}
       </div>
       {open && (
-        <p className="mt-3 max-w-xl rounded-2xl border border-line bg-surface p-3 text-xs text-mist">
+        <p className="mt-3 max-w-xl rounded-2xl border-[3px] border-line bg-surface p-3 text-xs text-mist">
           {COPY[open]}
         </p>
       )}

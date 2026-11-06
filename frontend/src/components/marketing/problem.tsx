@@ -13,7 +13,7 @@ export function Problem() {
         ))}
       </ol>
 
-      <div className="mt-10 overflow-hidden rounded-2xl border border-line">
+      <div className="mt-10 overflow-hidden rounded-2xl border-[3px] border-line">
         <table className="w-full border-collapse text-left text-sm">
           <thead>
             <tr className="bg-surface text-mist">
@@ -24,7 +24,7 @@ export function Problem() {
           </thead>
           <tbody>
             {thresholdComparison.map((row) => (
-              <tr key={row.setup} className="border-t border-line">
+              <tr key={row.setup} className="border-t-[3px] border-line">
                 <td className="px-4 py-3 text-pale">{row.setup}</td>
                 <td className="px-4 py-3 text-pale">{row.exit}</td>
                 <td className="px-4 py-3 text-pale">{row.enter}</td>

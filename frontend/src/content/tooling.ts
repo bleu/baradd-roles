@@ -1,16 +1,16 @@
-// Captured by actually running the commands (2026-11-03), not written by
+// Captured by actually running the commands (2026-11-05), not written by
 // hand, per spec section 7.7. Re-capture if examples/*.toml or the CLI's
 // output format changes.
 export const lintOutput = {
-  command: "roles lint examples/defindex-exit.toml",
-  output: "✓ examples/defindex-exit.toml: no findings.",
+  command: "roles lint examples/exit-vault.toml",
+  output: "✓ examples/exit-vault.toml: no findings.",
 };
 
 export const diffOutput = {
-  command: "roles diff examples/defindex-entry.toml examples/defindex-entry-widened.toml",
-  output: `+ [widening] rule[entry-defindex]
+  command: "roles diff examples/entry-vault.toml examples/entry-vault-widened.toml",
+  output: `+ [widening] rule[entry-vault]
     threshold changed from 2 to 1.
-+ [widening] rule[entry-defindex].target[DeFindex vault].fn[deposit]
++ [widening] rule[entry-vault].target[Example vault].fn[deposit]
     range on arg 1 widened to [0, 5000000000000] (was [0, 500000000000]).
 
 2 change(s), 2 widening permissions.`,

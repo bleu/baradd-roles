@@ -40,7 +40,7 @@ describe("evaluate — required demo cases", () => {
   it("case 2 denies for a policy reason, not a threshold reason, even though the signature is valid", () => {
     const result = evaluate(["O1"], "exit-outside", false);
     expect(result.steps[2].passed).toBe(false); // the policy-check step
-    expect(result.reason).toContain("treasury as destination");
+    expect(result.reason).toContain("chest as destination");
   });
 
   it("case 8 shows A1 as ignored, not merely under-threshold", () => {

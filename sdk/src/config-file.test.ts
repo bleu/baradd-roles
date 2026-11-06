@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ConfigValidationError, parseConfigFile } from "./config-file.js";
+import { ConfigValidationError, parseConfigFile, stringifyConfigFile } from "./config-file.js";
 
 const VALID_TOML = `
 [account]
@@ -45,5 +45,14 @@ describe("parseConfigFile", () => {
   it("rejects an unknown condition op", () => {
     const toml = VALID_TOML.replace('op = "eq_self"', 'op = "always_true"');
     expect(() => parseConfigFile(toml)).toThrow(ConfigValidationError);
+  });
+});
+
+describe("stringifyConfigFile", () => {
+  it("round-trips a config through stringify and parse", () => {
+    const original = parseConfigFile(VALID_TOML);
+    const toml = stringifyConfigFile(original);
+    const reparsed = parseConfigFile(toml);
+    expect(reparsed).toEqual(original);
   });
 });

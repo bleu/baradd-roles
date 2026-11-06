@@ -8,7 +8,7 @@ members = [
 [workspace.package]
 edition = "2021"
 license = "MIT"
-repository = "https://github.com/bleu/barad-stellar-wallet"
+repository = "https://github.com/bleu/baradd-roles"
 
 [workspace.dependencies]
 soroban-sdk = "28.0.0"

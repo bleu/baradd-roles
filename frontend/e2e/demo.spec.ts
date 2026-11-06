@@ -16,8 +16,8 @@ test.describe("Demo — the 8 required cases (section 8.4), driven through the r
     await page.goto("/#demo");
   });
 
-  test("case 1: O1 exits to the treasury — approved, EXIT 1 of 1", async ({ page }) => {
-    await signAndAct(page, ["Operator 1"], "Exit the position to the treasury");
+  test("case 1: O1 exits to the chest — approved, EXIT 1 of 1", async ({ page }) => {
+    await signAndAct(page, ["Operator 1"], "Exit the position to the chest");
     await expect(resultPanel(page).getByText("Approved", { exact: true })).toBeVisible();
     await expect(page.getByRole("img", { name: "1 of 1 required signatures" })).toBeVisible();
   });
@@ -26,7 +26,7 @@ test.describe("Demo — the 8 required cases (section 8.4), driven through the r
     await signAndAct(page, ["Operator 1"], "Exit the position to an outside address");
     await expect(resultPanel(page).getByText("Denied", { exact: true })).toBeVisible();
     await expect(
-      resultPanel(page).getByText("The exit rule only allows the treasury as destination, even though the signature is valid."),
+      resultPanel(page).getByText("The exit rule only allows the chest as destination, even though the signature is valid."),
     ).toBeVisible();
   });
 
@@ -60,8 +60,8 @@ test.describe("Demo — the 8 required cases (section 8.4), driven through the r
     await expect(page.getByRole("img", { name: "2 of 2 required signatures" })).toBeVisible();
   });
 
-  test("case 8: A1 (not an EXIT signer) tries to exit to the treasury — denied, 0 counted", async ({ page }) => {
-    await signAndAct(page, ["Approver 1"], "Exit the position to the treasury");
+  test("case 8: A1 (not an EXIT signer) tries to exit to the chest — denied, 0 counted", async ({ page }) => {
+    await signAndAct(page, ["Approver 1"], "Exit the position to the chest");
     await expect(resultPanel(page).getByText("Denied", { exact: true })).toBeVisible();
     await expect(page.getByRole("img", { name: "0 of 1 required signatures" })).toBeVisible();
   });
@@ -73,7 +73,7 @@ test.describe("Demo — classic multisig contrast (section 8.1)", () => {
     await page.getByRole("checkbox", { name: /Classic multisig/ }).check();
 
     await page.getByRole("button", { name: "Operator 1" }).click();
-    await page.getByRole("button", { name: "Exit the position to the treasury" }).click();
+    await page.getByRole("button", { name: "Exit the position to the chest" }).click();
     await expect(resultPanel(page).getByText("Denied", { exact: true })).toBeVisible();
     await expect(page.getByRole("img", { name: "1 of 2 required signatures" })).toBeVisible();
 
@@ -101,7 +101,7 @@ test.describe("Demo — shortcuts and shareable state", () => {
     await page.getByRole("button", { name: "A stolen operator key" }).click();
     await expect(resultPanel(page).getByText("Denied", { exact: true })).toBeVisible();
     await expect(
-      resultPanel(page).getByText("The exit rule only allows the treasury as destination, even though the signature is valid."),
+      resultPanel(page).getByText("The exit rule only allows the chest as destination, even though the signature is valid."),
     ).toBeVisible();
   });
 

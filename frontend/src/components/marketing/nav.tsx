@@ -7,7 +7,7 @@ export function MarketingNav() {
       <div className="flex items-center justify-between px-6 py-4 lg:px-12">
         <Link href="/" className="flex items-center gap-2.5 text-pale">
           <Logo className="h-6 w-6 text-pale" />
-          <span className="font-display text-xl font-semibold">Barad</span>
+          <span className="font-display text-xl font-semibold">Baradd</span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm text-mist sm:flex">
           <a href="#how-it-works" className="transition hover:text-pale">
@@ -23,7 +23,7 @@ export function MarketingNav() {
             Docs
           </Link>
           <a
-            href="https://github.com/bleu/barad-stellar-wallet"
+            href="https://github.com/bleu/baradd-roles"
             target="_blank"
             rel="noreferrer"
             className="transition hover:text-pale"
@@ -33,7 +33,7 @@ export function MarketingNav() {
         </nav>
         <Link
           href="/app"
-          className="rounded-full bg-gold px-4 py-2 text-sm font-medium text-gold-ink transition hover:opacity-90"
+          className="btn-primary border-[3px] border-obsidian px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide transition"
         >
           Open the prototype
         </Link>

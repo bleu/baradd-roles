@@ -41,8 +41,8 @@ Barad is an early prototype, and the page must say so. This section is read from
 | Component | State today | What the page may say |
 | --- | --- | --- |
 | `contracts/roles-policy` | Implemented against OpenZeppelin's `stellar-accounts` 0.8.0; 14 tests (11 unit, 3 property-based); builds to Wasm | "Implemented and tested." Not "audited". Not "deployed" (testnet deployment is still open) |
-| `@barad/sdk` and `@barad/cli`: `lint`, `diff` | Real, offline, work on local TOML files | "Lint and diff a policy before you sign it" |
-| `@barad/cli`: `simulate`, `apply` | Honest stubs that explain what infrastructure they need | Do not present as working |
+| `@baradd/sdk` and `@baradd/cli`: `lint`, `diff` | Real, offline, work on local TOML files | "Lint and diff a policy before you sign it" |
+| `@baradd/cli`: `simulate`, `apply` | Honest stubs that explain what infrastructure they need | Do not present as working |
 | `frontend` | Next.js UI over illustrative data in `mock-data.ts`: treasury dashboard, ADMIN/EXIT/ENTRY rule cards, plain-language policy viewer; Freighter connect is read-only | Label every figure "demo data". Do not imply a live treasury |
 | Fork, fuzz and invariant tests; CI | Not added yet | Do not claim them |
 | External audit | None. Soroban Audit Bank eligibility is unconfirmed | "Audit planned" only |

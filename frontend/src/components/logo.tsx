@@ -1,7 +1,7 @@
 /**
- * The official Barad fortress mark — negative-space twin towers converging
+ * The official Baradd fortress mark — negative-space twin towers converging
  * to a central spire, with an arched gate cut from the base. From the
- * user-supplied brand asset pack (public/brand/svg/barad-mark.svg),
+ * user-supplied brand asset pack (public/brand/svg/baradd-mark.svg),
  * reproduced here as a path so it inherits currentColor like the rest of
  * the UI rather than being a static asset.
  */

@@ -20,10 +20,11 @@ describe("SignerList", () => {
 
   it("marks the first `threshold` signers distinctly from the rest", () => {
     const { container } = render(<SignerList signers={SIGNERS} threshold={2} />);
-    const dots = container.querySelectorAll('[aria-hidden="true"]');
-    expect(dots).toHaveLength(3);
-    expect(dots[0]).toHaveClass("bg-gold");
-    expect(dots[1]).toHaveClass("bg-gold");
-    expect(dots[2]).toHaveClass("bg-line");
+    const keyholes = container.querySelectorAll('svg[aria-hidden="true"]');
+    expect(keyholes).toHaveLength(3);
+    const boxFill = (svg: Element) => svg.querySelector("rect")?.getAttribute("style");
+    expect(boxFill(keyholes[0])).toContain("fill: var(--obsidian)");
+    expect(boxFill(keyholes[1])).toContain("fill: var(--obsidian)");
+    expect(boxFill(keyholes[2])).toContain("fill: none");
   });
 });
