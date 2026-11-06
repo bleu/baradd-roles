@@ -15,10 +15,17 @@ jobs:
         with:
           targets: wasm32v1-none
       - uses: Swatinem/rust-cache@v2
+      - name: install stellar-cli
+        run: |
+          curl -L https://github.com/stellar/stellar-cli/releases/download/v27.1.0/stellar-cli-27.1.0-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          sudo mv stellar /usr/local/bin/stellar
       - name: cargo test
         run: cargo test --workspace
       - name: build wasm (roles-policy)
-        run: cargo build --package roles-policy --release --target wasm32v1-none
+        # soroban-sdk 28 requires the build to go through `stellar contract
+        # build` (not a plain `cargo build --target`) — it checks for an env
+        # var that only this wrapper sets.
+        run: stellar contract build --package roles-policy
 
   js:
     name: Node (sdk, cli, frontend)
@@ -31,8 +38,11 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # @baradd/sdk is a workspace package other packages import via its
+      # built `exports` map (dist/) — build it before anything that type-
+      # checks or lints against it, or module resolution fails.
+      - run: pnpm -r build
       - run: pnpm -r lint
       - name: check-claims (landing page copy)
         run: pnpm --filter frontend check-claims
       - run: pnpm -r test
-      - run: pnpm -r build
