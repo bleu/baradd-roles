@@ -1,25 +1,27 @@
 export function Closing() {
   return (
-    <section className="mx-auto max-w-[1120px] px-6 py-16 text-center">
-      <h2 className="font-display text-3xl text-pale">Follow the build</h2>
-      <p className="mx-auto mt-3 max-w-md text-mist">The code is open.</p>
-      <div className="mt-6 flex justify-center gap-3">
-        <a
-          href="https://github.com/bleu/baradd-roles"
-          target="_blank"
-          rel="noreferrer"
-          className="btn-primary border-[3px] border-obsidian px-6 py-3 text-sm font-extrabold uppercase tracking-wide transition"
-        >
-          GitHub
-        </a>
-        <a
-          href="https://github.com/bleu/baradd-roles/blob/master/docs/spec.md"
-          target="_blank"
-          rel="noreferrer"
-          className="rounded-full border-[3px] border-line px-5 py-2.5 text-sm text-pale transition hover:border-mist"
-        >
-          Specification
-        </a>
+    <section id="cta" className="on-ink">
+      <div className="mx-auto flex max-w-[900px] flex-col items-center gap-8 px-6 py-24 text-center sm:py-32">
+        <h2 className="font-display text-[clamp(2.9rem,7vw,6.25rem)] leading-[0.9] text-surface">
+          Leave with one key. <span className="text-gold">Enter with many.</span>
+        </h2>
+        <p className="m-0 text-xl text-[#c9c6be]">The demo is live on testnet. Nothing here touches real funds.</p>
+        <div className="flex flex-wrap justify-center gap-4">
+          <a
+            href="#demo"
+            className="border-[3px] border-surface bg-gold px-6 py-3 text-sm font-extrabold tracking-wide text-obsidian uppercase shadow-[6px_6px_0_var(--surface)] transition hover:opacity-90"
+          >
+            Try to move the chest
+          </a>
+          <a
+            href="https://github.com/bleu/baradd-roles/blob/master/docs/spec.md"
+            target="_blank"
+            rel="noreferrer"
+            className="border-[3px] border-surface px-6 py-3 text-sm font-extrabold tracking-wide text-surface uppercase transition hover:opacity-70"
+          >
+            Follow the build
+          </a>
+        </div>
       </div>
     </section>
   );

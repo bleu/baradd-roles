@@ -1,66 +1,51 @@
 import { describe, expect, it } from "vitest";
 import { evaluate, type ActionId, type KeyId } from "./evaluate";
 
-// The 8 required cases from the spec, section 8.4. Case 7's "2 of 3" in the
-// brief looks like a documentation slip — ADMIN's required threshold is 2,
-// not 3, and every other case's "counted of required" (1 of 1, 3 of 3, 1 of
-// 3, 0 of 2) is internally consistent with "required," not "total signers
-// in the rule." We implement the mechanically consistent version (2 of 2)
-// and flag the discrepancy rather than hardcode a contradiction.
-describe("evaluate — required demo cases", () => {
-  const cases: Array<{
-    n: number;
-    signed: KeyId[];
-    action: ActionId;
-    approved: boolean;
-    rule: string;
-    counted: number;
-    required: number;
-  }> = [
-    { n: 1, signed: ["O1"], action: "exit-to-treasury", approved: true, rule: "EXIT", counted: 1, required: 1 },
-    { n: 2, signed: ["O1"], action: "exit-outside", approved: false, rule: "EXIT", counted: 1, required: 1 },
-    { n: 3, signed: ["O1"], action: "enter", approved: false, rule: "ENTRY", counted: 1, required: 3 },
-    { n: 4, signed: ["O1", "A1", "A2"], action: "enter", approved: true, rule: "ENTRY", counted: 3, required: 3 },
-    { n: 5, signed: ["O1"], action: "approve", approved: false, rule: "ENTRY", counted: 1, required: 3 },
-    { n: 6, signed: ["O1"], action: "change-rules", approved: false, rule: "ADMIN", counted: 0, required: 2 },
-    { n: 7, signed: ["G1", "G2"], action: "change-rules", approved: true, rule: "ADMIN", counted: 2, required: 2 },
-    { n: 8, signed: ["A1"], action: "exit-to-treasury", approved: false, rule: "EXIT", counted: 0, required: 1 },
+// Mirrors the demo's real signer shape: 2 governance, 3 admin, 3 operator
+// keys, and independent OR'd role groups per action — the same model the
+// rest of the app (role-groups-editor, the on-chain wizard) uses, not a
+// pooled per-rule threshold.
+describe("evaluate — independent role groups", () => {
+  const cases: Array<{ n: number; signed: KeyId[]; action: ActionId; approved: boolean }> = [
+    { n: 1, signed: ["O1"], action: "exit", approved: true }, // operator 1 of 1
+    { n: 2, signed: ["O1"], action: "exit-outside", approved: false }, // policy denies regardless of signatures
+    { n: 3, signed: ["O1"], action: "enter", approved: false }, // operator isn't an "enter" group
+    { n: 4, signed: ["A1", "A2"], action: "enter", approved: true }, // admin 2 of 2
+    { n: 5, signed: ["G1", "G2"], action: "enter", approved: true }, // governance 2 of 2, the other path
+    { n: 6, signed: ["A1", "A2", "A3"], action: "approve", approved: true }, // admin 3 of 3
+    { n: 7, signed: ["G1"], action: "change-rules", approved: false }, // governance 1 of 2, not enough
+    { n: 8, signed: ["G1", "G2"], action: "change-rules", approved: true }, // governance 2 of 2
+    { n: 9, signed: ["A1"], action: "change-rules", approved: false }, // admin isn't a "change-rules" group at all
   ];
 
   for (const c of cases) {
     it(`case ${c.n}: ${c.signed.join("+")} on "${c.action}" → ${c.approved ? "approved" : "denied"}`, () => {
-      const result = evaluate(c.signed, c.action, false);
-      expect(result.approved).toBe(c.approved);
-      expect(result.ruleId).toBe(c.rule);
-      expect(result.counted).toBe(c.counted);
-      expect(result.required).toBe(c.required);
+      expect(evaluate(c.signed, c.action, false).approved).toBe(c.approved);
     });
   }
 
-  it("case 2 denies for a policy reason, not a threshold reason, even though the signature is valid", () => {
+  it("denies for a policy reason, not a threshold reason, even with a valid signer", () => {
     const result = evaluate(["O1"], "exit-outside", false);
-    expect(result.steps[2].passed).toBe(false); // the policy-check step
-    expect(result.reason).toContain("chest as destination");
+    expect(result.steps[1].tone).toBe("bad"); // the argument-check step
+    expect(result.headline).toContain("argument check failed");
   });
 
-  it("case 8 shows A1 as ignored, not merely under-threshold", () => {
-    const result = evaluate(["A1"], "exit-to-treasury", false);
-    expect(result.ignoredKeys).toEqual(["A1"]);
+  it("names the group that satisfied the threshold when more than one path exists", () => {
+    const result = evaluate(["G1", "G2"], "enter", false);
+    expect(result.headline).toContain("Governance");
   });
 });
 
 describe("evaluate — classic multisig toggle (section 8.1 contrast)", () => {
-  it("case 1 and case 3 both need 2 signatures in classic mode", () => {
-    const exit = evaluate(["O1"], "exit-to-treasury", true);
-    const enter = evaluate(["O1"], "enter", true);
-    expect(exit.required).toBe(2);
-    expect(enter.required).toBe(2);
-    expect(exit.approved).toBe(false);
-    expect(enter.approved).toBe(false);
+  it("needs 5 of 8 keys regardless of role or action", () => {
+    const under = evaluate(["O1", "O2", "A1", "A2"], "exit", true);
+    const atThreshold = evaluate(["O1", "O2", "A1", "A2", "A3"], "exit", true);
+    expect(under.approved).toBe(false);
+    expect(atThreshold.approved).toBe(true);
   });
 
-  it("case 2 is approved with 2 keys in classic mode, because destination isn't checked", () => {
-    const result = evaluate(["O1", "O2"], "exit-outside", true);
+  it("approves an outside exit with 5 keys, because destination isn't checked", () => {
+    const result = evaluate(["O1", "O2", "A1", "A2", "A3"], "exit-outside", true);
     expect(result.approved).toBe(true);
   });
 });

@@ -70,6 +70,6 @@ test.describe("Wallet app (/app) — prototype UI", () => {
     await page.goto("/app");
     await page.getByRole("link", { name: "Back to the site" }).click();
     await expect(page).toHaveURL(/\/$/);
-    await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many." })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Leave with one key. Enter with many.", level: 1 })).toBeVisible();
   });
 });

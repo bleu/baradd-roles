@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { shortAddr } from "@/lib/format";
-import { RuleKindBadge } from "@/components/rule-kind-badge";
 import { RoleGroupsView } from "@/components/role-groups-view";
 import { PolicyView } from "@/components/policy-view";
+import { RuleHeader } from "@/components/wallet/rule-header";
 import { getOnchainRuleViews } from "@/lib/onchain/rule-view";
 import { useNetwork } from "@/hooks/use-network";
 import type { ContextRule } from "@/lib/types";
@@ -65,16 +65,9 @@ export function OnchainRulePage({ accountId, ruleId }: { accountId: string; rule
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <Link href={`/app/${accountId}`} className="text-xs text-mist transition hover:text-pale">
-        ← {shortAddr(accountId, 8, 4)}
-      </Link>
+      <RuleHeader backHref={`/app/${accountId}`} backLabel={shortAddr(accountId, 8, 4)} rule={rule} />
 
-      <div className="mt-4 flex items-start justify-between gap-4">
-        <h1 className="font-display text-3xl text-pale">{rule.name}</h1>
-        <RuleKindBadge kind={rule.kind} />
-      </div>
-
-      <section className="mt-10">
+      <section className="mt-10 border-[3px] border-line bg-surface p-6">
         <h2 className="text-xs tracking-[0.2em] text-mist uppercase">Signers</h2>
         <div className="mt-3">
           <RoleGroupsView roleGroups={rule.roleGroups} />
@@ -82,8 +75,8 @@ export function OnchainRulePage({ accountId, ruleId }: { accountId: string; rule
       </section>
 
       {rule.target ? (
-        <section className="mt-10">
-          <h2 className="text-xs tracking-[0.2em] text-mist uppercase">RolesPolicy</h2>
+        <section className="mt-10 border-[3px] border-line bg-surface p-6">
+          <h2 className="text-xs tracking-[0.2em] text-mist uppercase">What it allows</h2>
           <p className="mt-2 text-sm text-mist">
             Deny-by-default: any contract, function, or argument not listed below is rejected.
           </p>
@@ -92,7 +85,7 @@ export function OnchainRulePage({ accountId, ruleId }: { accountId: string; rule
           </div>
         </section>
       ) : (
-        <section className="mt-10 rounded-2xl border-[3px] border-line bg-surface p-4 text-sm text-mist">
+        <section className="mt-10 border-[3px] border-line bg-surface p-6 text-sm text-mist">
           This is an Admin rule — it has no RolesPolicy attached. Its signers can change rules and
           install or remove policies on the other rules.
         </section>

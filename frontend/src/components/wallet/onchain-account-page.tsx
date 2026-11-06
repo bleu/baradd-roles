@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { shortAddr } from "@/lib/format";
 import { RuleCard } from "@/components/rule-card";
+import { Tag } from "@/components/ui/tag";
+import { GovernanceCard } from "@/components/wallet/governance-card";
 import { getOnchainRuleViews } from "@/lib/onchain/rule-view";
 import { useNetwork } from "@/hooks/use-network";
 import type { ContextRule } from "@/lib/types";
@@ -39,12 +41,12 @@ export function OnchainAccountPage({ id }: { id: string }) {
         ← Chests
       </Link>
 
-      <div className="mt-4 flex items-start justify-between">
+      <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-3xl text-pale">On-chain chest</h1>
           <p className="mt-1 font-mono text-xs text-mist">{shortAddr(id, 10, 4)}</p>
         </div>
-        <span className="rounded-2xl border-[3px] border-line px-2 py-0.5 text-xs text-mist">{network}</span>
+        <Tag tone="ink">{network}</Tag>
       </div>
 
       {error && (
@@ -56,17 +58,28 @@ export function OnchainAccountPage({ id }: { id: string }) {
       {!error && rules === null && <p className="mt-10 text-sm text-mist">Reading rules from chain…</p>}
 
       {rules && (
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {rules.map((rule) => (
-            <RuleCard key={rule.id} accountId={id} rule={rule} />
-          ))}
-          <Link
-            href={`/app/${id}/rules/new`}
-            className="card-shadow flex items-center justify-center rounded-2xl border border-dashed border-line p-5 text-sm text-mist transition hover:border-mist hover:text-pale"
-          >
-            + Add rule
-          </Link>
-        </div>
+        <>
+          <div className="mt-10">
+            <GovernanceCard adminRule={rules.find((r) => r.kind === "Admin")} />
+          </div>
+
+          <div className="mt-10">
+            <h2 className="text-xs tracking-[0.2em] text-mist uppercase">Rules</h2>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {rules
+                .filter((r) => r.kind === "Rule")
+                .map((rule) => (
+                  <RuleCard key={rule.id} accountId={id} rule={rule} />
+                ))}
+              <Link
+                href={`/app/${id}/rules/new`}
+                className="card-shadow flex items-center justify-center border-[3px] border-dashed border-line p-5 text-sm text-mist transition hover:border-mist hover:text-pale"
+              >
+                + Add rule
+              </Link>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

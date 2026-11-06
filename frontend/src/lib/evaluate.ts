@@ -1,216 +1,203 @@
 /**
  * Pure evaluation logic for the "Try to move the chest" demo (spec
- * section 8). No network, no wallet — mirrors the policy contract's
- * semantics (route to a rule, count signers, check the policy, compare to
- * the threshold, deny on first failure) over a fixed, hardcoded example.
+ * section 8). No network, no wallet — mirrors the real account's semantics:
+ * route to a rule, check the argument conditions, then check whether ANY
+ * ONE of the rule's independent role groups has reached its own threshold
+ * (groups are never pooled together). Over a fixed, hardcoded example.
  */
 
-export type RuleId = "EXIT" | "ENTRY" | "ADMIN";
-export type ActionId = "exit-to-treasury" | "exit-outside" | "enter" | "approve" | "change-rules";
-export type KeyId = "O1" | "O2" | "A1" | "A2" | "A3" | "G1" | "G2" | "G3";
+export type Role = "governance" | "admin" | "operator";
+export type KeyId = "G1" | "G2" | "A1" | "A2" | "A3" | "O1" | "O2" | "O3";
+export type ActionId = "exit" | "exit-outside" | "enter" | "approve" | "change-rules";
 
-export const ALL_KEYS: KeyId[] = ["O1", "O2", "A1", "A2", "A3", "G1", "G2", "G3"];
-
-export const KEY_INFO: Record<KeyId, { label: string; group: "operator" | "approver" | "governance" }> = {
-  O1: { label: "Operator 1", group: "operator" },
-  O2: { label: "Operator 2", group: "operator" },
-  A1: { label: "Approver 1", group: "approver" },
-  A2: { label: "Approver 2", group: "approver" },
-  A3: { label: "Approver 3", group: "approver" },
-  G1: { label: "Governance 1", group: "governance" },
-  G2: { label: "Governance 2", group: "governance" },
-  G3: { label: "Governance 3", group: "governance" },
+export const ROLE_LABEL: Record<Role, string> = {
+  governance: "Governance",
+  admin: "Admin",
+  operator: "Operator",
 };
 
-export interface RuleDef {
-  id: RuleId;
-  signers: KeyId[];
-  threshold: number;
-  allows: string;
+export const ROLE_KEYS: Record<Role, KeyId[]> = {
+  governance: ["G1", "G2"],
+  admin: ["A1", "A2", "A3"],
+  operator: ["O1", "O2", "O3"],
+};
+
+export const ALL_KEYS: KeyId[] = [...ROLE_KEYS.governance, ...ROLE_KEYS.admin, ...ROLE_KEYS.operator];
+
+export const KEY_INFO: Record<KeyId, { label: string; role: Role }> = Object.fromEntries(
+  (Object.keys(ROLE_KEYS) as Role[]).flatMap((role) =>
+    ROLE_KEYS[role].map((key, i) => [key, { label: `${ROLE_LABEL[role]} ${i + 1}`, role }]),
+  ),
+) as Record<KeyId, { label: string; role: Role }>;
+
+interface GroupRequirement {
+  role: Role;
+  need: number;
 }
 
-export const RULES: Record<RuleId, RuleDef> = {
-  EXIT: {
-    id: "EXIT",
-    signers: ["O1", "O2"],
-    threshold: 1,
-    allows: "withdraw on the example protocol, only if the destination is the chest",
-  },
-  ENTRY: {
-    id: "ENTRY",
-    signers: ["O1", "O2", "A1", "A2", "A3"],
-    threshold: 3,
-    allows: "deposit on the example protocol, plus the token transfer and approve calls it needs",
-  },
-  ADMIN: {
-    id: "ADMIN",
-    signers: ["G1", "G2", "G3"],
-    threshold: 2,
-    allows: "adding or removing rules and installing policies",
-  },
-};
-
-/** The classic-multisig toggle (section 8.1): one threshold, any key, and
- * it never inspects the call's destination or arguments. */
-export const CLASSIC_THRESHOLD = 2;
-
-export interface ActionDef {
+interface ActionDef {
   id: ActionId;
   label: string;
-  rule: RuleId;
-  /** Whether this exact call satisfies the policy's argument conditions. */
+  fnName: string;
+  fnCall: string;
   satisfiesPolicy: boolean;
-  callDescription: string;
-  denyReason: string;
+  argText: string;
+  groups: GroupRequirement[];
 }
 
+const EXIT_GROUPS: GroupRequirement[] = [
+  { role: "operator", need: 1 },
+  { role: "admin", need: 1 },
+];
+
 export const ACTIONS: Record<ActionId, ActionDef> = {
-  "exit-to-treasury": {
-    id: "exit-to-treasury",
-    label: "Exit the position to the chest",
-    rule: "EXIT",
+  exit: {
+    id: "exit",
+    label: "Exit to the chest",
+    fnName: "withdraw",
+    fnCall: "withdraw(…, this account)",
     satisfiesPolicy: true,
-    callDescription: "withdraw() with destination = the chest",
-    denyReason: "",
+    argText: "Destination equals this chest. Passed.",
+    groups: EXIT_GROUPS,
   },
   "exit-outside": {
     id: "exit-outside",
-    label: "Exit the position to an outside address",
-    rule: "EXIT",
+    label: "Exit to an outside address",
+    fnName: "withdraw",
+    fnCall: "withdraw(…, other account)",
     satisfiesPolicy: false,
-    callDescription: "withdraw() with destination = an address outside the chest",
-    denyReason:
-      "The exit rule only allows the chest as destination, even though the signature is valid.",
+    argText: "Destination is not this chest. Failed.",
+    groups: EXIT_GROUPS,
   },
   enter: {
     id: "enter",
-    label: "Enter the position",
-    rule: "ENTRY",
+    label: "Enter a new position",
+    fnName: "deposit",
+    fnCall: "deposit(…, amount)",
     satisfiesPolicy: true,
-    callDescription: "deposit() on the example protocol",
-    denyReason: "",
+    argText: "Amount is within the allowed range. Passed.",
+    groups: [
+      { role: "admin", need: 2 },
+      { role: "governance", need: 2 },
+    ],
   },
   approve: {
     id: "approve",
     label: "Approve token spending",
-    rule: "ENTRY",
+    fnName: "approve",
+    fnCall: "approve(spender, …)",
     satisfiesPolicy: true,
-    callDescription: "approve() for the example protocol",
-    denyReason: "",
+    argText: "Spender is in the approved set. Passed.",
+    groups: [
+      { role: "admin", need: 3 },
+      { role: "governance", need: 2 },
+    ],
   },
   "change-rules": {
     id: "change-rules",
     label: "Change the rules",
-    rule: "ADMIN",
+    fnName: "set_rule",
+    fnCall: "set_rule(…)",
     satisfiesPolicy: true,
-    callDescription: "add/remove a context rule or policy",
-    denyReason: "",
+    argText: "No argument limits on this rule.",
+    groups: [{ role: "governance", need: 2 }],
   },
 };
 
+/** The classic-multisig toggle (section 8.1): one pooled threshold, any
+ * key, and it never inspects the call's destination or arguments. */
+export const CLASSIC_THRESHOLD = 5;
+
 export interface EvaluationStep {
-  label: string;
-  passed: boolean;
+  title: string;
   detail: string;
+  tone: "ok" | "bad" | "info" | "neutral";
+  mark: string;
+  pins?: KeyId[];
 }
 
 export interface EvaluationResult {
   approved: boolean;
-  ruleId: RuleId;
-  counted: number;
-  required: number;
-  ignoredKeys: KeyId[];
-  reason: string;
+  headline: string;
   steps: EvaluationStep[];
 }
 
-export function evaluate(
-  signedKeys: KeyId[],
-  actionId: ActionId,
-  classicMultisig: boolean,
-): EvaluationResult {
+export function evaluate(signedKeys: KeyId[], actionId: ActionId, classicMultisig: boolean): EvaluationResult {
   const action = ACTIONS[actionId];
-  const rule = RULES[action.rule];
+  const signed = new Set(signedKeys);
   const steps: EvaluationStep[] = [];
 
-  // Step 1: choose the rule from the action.
-  steps.push({
-    label: `Route "${action.label}" to the ${rule.id} rule`,
-    passed: true,
-    detail: classicMultisig
-      ? `Classic multisig ignores rule routing: any ${CLASSIC_THRESHOLD} of the account's keys can authorize any action.`
-      : `${rule.id} allows ${rule.allows}.`,
-  });
-
-  // Step 2: count signed keys that belong to the rule's signer set. Classic
-  // multisig doesn't scope by rule, so every key is eligible.
-  const eligible = classicMultisig ? ALL_KEYS : rule.signers;
-  const counted = signedKeys.filter((k) => eligible.includes(k)).length;
-  const ignoredKeys = signedKeys.filter((k) => !eligible.includes(k));
-  steps.push({
-    label: "Count the signed keys that belong to this rule",
-    passed: true,
-    detail:
-      ignoredKeys.length > 0
-        ? `${counted} counted; ${ignoredKeys.join(", ")} ignored (not in this rule's signer set).`
-        : `${counted} counted.`,
-  });
-
-  // Step 3: check the policy (function + argument conditions). Classic
-  // multisig has no policy step — it never inspects the call.
-  const policyOk = classicMultisig ? true : action.satisfiesPolicy;
-  steps.push({
-    label: "Check the policy: function and argument conditions",
-    passed: policyOk,
-    detail: classicMultisig
-      ? "Classic multisig does not inspect the call's destination or arguments."
-      : policyOk
-        ? `${action.callDescription} — on the list, conditions hold.`
-        : `${action.callDescription} — denied: ${action.denyReason}`,
-  });
-  if (!policyOk) {
+  if (classicMultisig) {
+    const total = signedKeys.length;
+    const approved = total >= CLASSIC_THRESHOLD;
+    steps.push({
+      title: "Rule matched",
+      detail: "None. A classic multisig has one rule for every action, including this one.",
+      tone: "neutral",
+      mark: "–",
+    });
+    steps.push({
+      title: "Argument check",
+      detail: "Not performed. It cannot tell a safe destination from an unsafe one.",
+      tone: "neutral",
+      mark: "–",
+    });
+    steps.push({
+      title: "Signatures counted",
+      detail: `${total} of ${ALL_KEYS.length} keys signed. ${CLASSIC_THRESHOLD} needed.`,
+      tone: approved ? "ok" : "bad",
+      mark: approved ? "✓" : "✕",
+    });
     return {
-      approved: false,
-      ruleId: rule.id,
-      counted,
-      required: classicMultisig ? CLASSIC_THRESHOLD : rule.threshold,
-      ignoredKeys,
-      reason: action.denyReason,
+      approved,
+      headline: approved
+        ? `Approved. ${CLASSIC_THRESHOLD} keys signed.`
+        : `Denied. Classic multisig needs ${CLASSIC_THRESHOLD} of ${ALL_KEYS.length}, and ${total} signed.`,
       steps,
     };
   }
 
-  // Step 4: compare signatures counted to the threshold required.
-  const required = classicMultisig ? CLASSIC_THRESHOLD : rule.threshold;
-  const thresholdOk = counted >= required;
+  const results = action.groups.map((g) => {
+    const have = ROLE_KEYS[g.role].filter((k) => signed.has(k)).length;
+    return { ...g, have, met: have >= g.need };
+  });
+  const anyMet = results.some((r) => r.met);
+  const approved = action.satisfiesPolicy && anyMet;
+
+  let headline: string;
+  if (!action.satisfiesPolicy) headline = "Denied. The argument check failed, so signatures do not matter.";
+  else if (anyMet) headline = `Approved. ${ROLE_LABEL[results.find((r) => r.met)!.role]} reached its threshold.`;
+  else headline = "Denied. No group has enough signatures yet.";
+
   steps.push({
-    label: "Compare signatures counted to the threshold required",
-    passed: thresholdOk,
-    detail: `${counted} of ${required} required.`,
+    title: "Rule matched",
+    detail: `${action.label} → ${action.fnName}()`,
+    tone: "info",
+    mark: "1",
+  });
+  steps.push({
+    title: "Argument check",
+    detail: action.argText,
+    tone: action.satisfiesPolicy ? "ok" : "bad",
+    mark: action.satisfiesPolicy ? "✓" : "✕",
+  });
+  results.forEach((r, i) => {
+    steps.push({
+      title: `${i === 0 ? "" : "Or: "}${ROLE_LABEL[r.role]} group, ${r.need} of ${ROLE_KEYS[r.role].length} needed`,
+      detail: `${r.have} signed${r.met ? ". Threshold reached." : ". Not enough."}`,
+      tone: r.met ? "ok" : "neutral",
+      mark: r.met ? "✓" : "·",
+      pins: ROLE_KEYS[r.role],
+    });
+  });
+  steps.push({
+    title: "Any one group is enough",
+    detail: approved
+      ? "At least one group passed and the arguments are valid."
+      : "Both conditions must hold: valid arguments and one group at threshold.",
+    tone: approved ? "ok" : "bad",
+    mark: approved ? "✓" : "✕",
   });
 
-  if (!thresholdOk) {
-    return {
-      approved: false,
-      ruleId: rule.id,
-      counted,
-      required,
-      ignoredKeys,
-      reason:
-        ignoredKeys.length > 0
-          ? `Only ${eligible === ALL_KEYS ? "keys counted toward the threshold" : `${rule.id.toLowerCase()} keys`} count for ${rule.id}; ${counted} of ${required}.`
-          : `${rule.id} needs ${required} signature${required === 1 ? "" : "s"}; ${counted} counted.`,
-      steps,
-    };
-  }
-
-  return {
-    approved: true,
-    ruleId: rule.id,
-    counted,
-    required,
-    ignoredKeys,
-    reason: `${rule.id} rule, ${counted} of ${required}.`,
-    steps,
-  };
+  return { approved, headline, steps };
 }
