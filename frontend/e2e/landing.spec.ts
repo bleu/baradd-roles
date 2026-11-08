@@ -63,9 +63,10 @@ test.describe("Landing page", () => {
     await expect(question).toHaveAttribute("aria-expanded", "false");
   });
 
-  test("the hero visual placeholder is present", async ({ page }) => {
+  test("the hero visual image is present", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByTestId("hero-visual")).toBeVisible();
-    await expect(page.getByText("ASSET C1")).toBeVisible();
+    const heroVisual = page.getByTestId("hero-visual");
+    await expect(heroVisual).toBeVisible();
+    await expect(heroVisual.locator("img")).toHaveAttribute("src", /baradd-deposit-wall-hero/);
   });
 });

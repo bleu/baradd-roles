@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { StatusBadge } from "@/components/ui/status-badge";
 
@@ -40,16 +41,17 @@ export function Hero() {
 
       <div
         data-testid="hero-visual"
-        className="card-shadow flex min-h-[420px] flex-col items-center justify-center gap-3 border-[3px] border-obsidian bg-surface p-8 text-center lg:min-h-[560px]"
+        className="card-shadow relative min-h-[420px] overflow-hidden border-[3px] border-obsidian bg-surface lg:min-h-[560px]"
         aria-hidden
       >
-        <span className="border-2 border-obsidian bg-gold px-2 py-0.5 font-mono text-xs font-bold">
-          ASSET C1
-        </span>
-        <span className="font-display text-xl leading-tight text-pale">
-          Wall of steel deposit boxes, one door ajar, orange light inside
-        </span>
-        <span className="font-mono text-xs text-mist">placeholder · 1600 × 2000 portrait</span>
+        <Image
+          src="/brand/backgrounds/baradd-deposit-wall-hero.png"
+          alt=""
+          fill
+          priority
+          className="object-cover"
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
       </div>
     </section>
   );
