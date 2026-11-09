@@ -7,8 +7,8 @@ export function Hero() {
     <section className="mx-auto grid max-w-[1240px] gap-14 px-6 py-16 sm:py-24 lg:grid-cols-2 lg:items-stretch lg:px-10">
       <div className="flex flex-col justify-center gap-7">
         <StatusBadge />
-        <h1 className="font-display text-[2.5rem] leading-[0.9] text-pale sm:text-6xl lg:text-7xl">
-          Leave with <span className="bg-gold px-3 py-0.5 text-gold-ink">one key.</span> Enter with
+        <h1 className="font-display text-[2.5rem] leading-[1.05] text-pale sm:text-6xl lg:text-7xl">
+          Leave with <span className="bg-gold px-3 text-gold-ink">one key.</span> Enter with
           many.
         </h1>
         <p className="max-w-lg text-xl text-mist">
@@ -41,17 +41,20 @@ export function Hero() {
 
       <div
         data-testid="hero-visual"
-        className="card-shadow relative min-h-[420px] overflow-hidden border-[3px] border-obsidian bg-surface lg:min-h-[560px]"
+        className="card-shadow relative min-h-[420px] overflow-hidden border-[3px] border-obsidian p-6 lg:min-h-[560px]"
+        style={{ background: "#d0cec7" }}
         aria-hidden
       >
-        <Image
-          src="/brand/backgrounds/baradd-deposit-wall-hero.png"
-          alt=""
-          fill
-          priority
-          className="object-cover"
-          sizes="(min-width: 1024px) 50vw, 100vw"
-        />
+        <div className="relative h-full w-full">
+          <Image
+            src="/brand/backgrounds/baradd-deposit-wall-hero.png"
+            alt=""
+            fill
+            priority
+            className="object-contain"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+          />
+        </div>
       </div>
     </section>
   );
